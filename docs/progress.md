@@ -20,3 +20,5 @@ Milestone 4: hosted RLS, column grants, assignee restrictions, provisioning, act
 Milestone 5: registration/login forms, confirmation guidance, sign-out, session guards, role-aware navigation, safe rendering and error handling implemented. Lint, four local tests and production build pass; hosted auth journey to be checked in milestone 12.
 
 Milestone 6: projects browser and dashboard use Supabase queries for status counts, assigned issues, and recent activity. Empty states implemented; lint and production build pass. Demo data and live journey checks remain pending.
+
+Milestone 7: create/edit/detail/delete issue workflow implemented, including permission-aware actions, validated fields, assignment and unsaved-change warning. Lint and production build pass. Storage prevents deleting issues that still contain files.

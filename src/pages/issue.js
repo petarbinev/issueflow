@@ -1,3 +1,7 @@
-import { shell } from '../components/shell.js';
-shell('Issue details', 'Keep your team moving forward.');
-document.querySelector('#page').textContent = 'Workspace setup is in progress.';
+import { page } from '../lib/page.js';
+import { issue } from '../services/data.js';
+import { detail } from '../components/issue-detail.js';
+page('Issue details','The full picture, in one place.',async context=>{
+ const id=new URLSearchParams(location.search).get('id'); if(!id) throw new Error('No issue was selected. Open an issue from the issue list.');
+ const current=await issue(id); detail(current,context);
+});
