@@ -1,36 +1,48 @@
 # Implementation progress
 
-Started November 8, 2026 (Europe/Sofia).
+State: `paused_before_commit_14` once this thirteenth milestone is pushed and its production rollout is verified in chat. Do not create another implementation commit on November 8.
 
-- Milestone 1: scope and agent instructions prepared; Git identity and remote connection pending.
-- Milestones 2–13: pending.
-- Milestone 14: reserved for November 9; user continuation required.
-- Milestone 15: reserved for November 10; user continuation required.
+Live app: https://issueflow-petarbinev.netlify.app
+Repository: https://github.com/petarbinev/issueflow
+Supabase project: `ynpgrmkpfdlikckuravp` (IssueFlow, Frankfurt).
+Netlify project: `b6d85424-5e59-4a38-bfe5-705c0d3d76bc`, team `pbinev`, Git deployment from `main`.
 
-GitHub and Supabase connections are not yet confirmed. No cloud acceptance tests have run.
+## Commit ledger
 
-Milestone 1: pushed `59b3e0d` to https://github.com/petarbinev/issueflow.
-Milestone 2: eight-page Vite scaffold, shared responsive shell, environment handling, CI, and validation checks prepared. Lint, 2 tests, and all eight production HTML outputs passed.
-Supabase project: `ynpgrmkpfdlikckuravp` (IssueFlow, Frankfurt), created with the user's organization confirmation.
+| Milestone | SHA | Actual author timestamp | Scope |
+|---|---|---|---|
+| 1 | `59b3e0d` | 2026-11-08T09:51:15+02:00 | docs: define project scope and development rules |
+| 2 | `7ccfa1a` | 2026-11-08T09:55:22+02:00 | chore: scaffold Vite multi-page app and checks |
+| 3 | `7a7f0d5` | 2026-11-08T09:57:41+02:00 | feat: add database schema and reproducible migrations |
+| 4 | `61f69dd` | 2026-11-08T10:01:06+02:00 | feat: enforce roles and database access policies |
+| 5 | `a67b518` | 2026-11-08T10:01:59+02:00 | feat: implement authentication and shared navigation |
+| 6 | `fe82f0c` | 2026-11-08T10:03:04+02:00 | feat: add project browser and dashboard |
+| 7 | `870b4a7` | 2026-11-08T10:03:30+02:00 | feat: implement issue creation and editing |
+| 8 | `61bc353` | 2026-11-08T10:04:40+02:00 | feat: add issue search filters and pagination |
+| 9 | `b1946af` | 2026-11-08T10:06:17+02:00 | feat: add issue discussion and activity history |
+| 10 | `0598e86` | 2026-11-08T10:07:50+02:00 | feat: add secure attachment upload and download |
+| 11 | `a23f481` | 2026-11-08T10:08:21+02:00 | feat: implement administrator management tools |
+| 12 | `042d711` | 2026-11-08T10:16:28+02:00 | test: verify responsive workflows and authorization |
+| 13 | See the commit containing this checkpoint | November 8, 2026 | Deploy configuration, live app, setup and evaluator documentation |
 
-Milestone 3: seven-table schema applied to the empty hosted project with RLS enabled on all tables. Local embedded PostgreSQL rebuild and constraint checks passed (3 tests total). Local migration filename matches hosted migration version `20261108075544`. ER diagram added.
+The milestone 13 SHA and final deployment/CI result are reported in the implementation chat; inspect `git log -1` for the exact checkpoint. No amended commit is needed to record its own SHA.
 
-Milestone 4: hosted RLS, column grants, assignee restrictions, provisioning, activity triggers and serialized last-admin protection applied. Four local tests pass, including direct SQL authorization attempts under the authenticated/anon roles. These simulate auth/storage schemas; hosted API tests remain required.
+## Verified
 
-Milestone 5: registration/login forms, confirmation guidance, sign-out, session guards, role-aware navigation, safe rendering and error handling implemented. Lint, four local tests and production build pass; hosted auth journey to be checked in milestone 12.
+- All milestones 1–12 were individually committed and pushed; GitHub Actions passed each code-bearing push.
+- Local ESLint, four tests, and eight-entry Vite production build passed.
+- Embedded PostgreSQL tests rebuild the application schema and check foreign keys, constraints, role escalation, assignee restrictions, immutable reporter identity, forged activity, last-admin protection, and actual API-role function grants. Auth and Storage metadata are simulated locally.
+- Hosted API checks passed for three confirmed demo logins, guest denial, admin permissions, issue/comment ownership, assignee status updates, and private file upload/download byte equality/delete restrictions and cleanup.
+- Browser verified login, dashboard, projects, search, issue create/edit, comment persistence, sign-out/admin login, member admin-page denial and admin panel display. Temporary verification issue was cleaned up.
+- Production member login, direct issue navigation and reload passed. All eight HTML URLs returned HTTP 200 and a missing page returned HTTP 404.
+- Supabase Auth site URL and production/local `/index.html` returns saved and observed. Actual new-user email delivery has not been exercised.
+- Local/remote migrations match versions 20261108075544, 20261108075747, 20261108080623, 20261108081410.
+- Security advisor inherited-function-grant warnings were fixed. Intended authenticated helper/RPC notices and disabled leaked-password protection are explained in docs/security.md.
+- A fictional `sample-evidence.txt` attachment is stored on the demo login issue; a provisioning script is included.
 
-Milestone 6: projects browser and dashboard use Supabase queries for status counts, assigned issues, and recent activity. Empty states implemented; lint and production build pass. Demo data and live journey checks remain pending.
+## Remaining work on the two reserved days
 
-Milestone 7: create/edit/detail/delete issue workflow implemented, including permission-aware actions, validated fields, assignment and unsaved-change warning. Lint and production build pass. Storage prevents deleting issues that still contain files.
+- **November 9, 2026 (Europe/Sofia), commit 14:** fresh-day regression review, real phone-width/device QA, persisted sessions/direct navigation/retry cases, and any discovered fixes. Available browser viewport overrides were clamped to an observed 767px, so 375px and 1440px checks are not claimed.
+- **November 10, 2026 (Europe/Sofia), commit 15:** fresh-checkout setup validation, final screenshots/submission/evidence audit, demo-account review and final live checks. Verify at least 15 public commits on three actual dates.
 
-Milestone 8: title search, combined project/status/priority/assignee filters, stable server pagination, URL persistence and reset controls implemented. Lint and production build pass.
-
-Milestone 9: comments create/edit/delete, reporter/assignee status controls and database-written activity history implemented. Lint and build pass. Fictional demo accounts, two projects and twelve sample issues provisioned in the dedicated project for live testing; no real user data used.
-
-Milestone 10: private bucket migration applied, local filename matches remote `20261108080623`; attachment upload/download/delete and partial-failure cleanup implemented. Four local tests and production build pass. Live file round trip is scheduled in milestone 12.
-
-Milestone 11: admin project create/edit/archive/restore, transactional member/admin role management, and moderation navigation implemented. Member access blocked by both page guard and database. Lint/build pass; live verification underway.
-
-Milestone 12: live API tests passed for three demo logins, guest denial, role/project restrictions, reporter/assignee column permissions, comment ownership and private file byte integrity/cleanup. Browser verified member login, dashboard, projects/search, issue create/edit, comment persistence, sign-out, admin access and member denial. Saved dashboard screenshot. Browser viewport override was clamped to 767px; phone-size QA remains pending and is explicitly recorded in the evidence file.
-
-Security-advisor findings about inherited function grants were fixed in migration `20261108081410`; tests now simulate Supabase default grants and assert internal trigger functions are not client-executable. Hosted API tests passed again after hardening. Remaining advisor notices are documented in docs/security.md.
+Resume each only when the user returns on that date or later. Keep actual timestamps, no empty commits, no squashing/backdating. Pause and notify after commit 14 as well.

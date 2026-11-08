@@ -1,6 +1,6 @@
 # IssueFlow — issue tracking system project plan
 
-Status: planning only; no app, repository, cloud resources, or commits created yet.
+Status: implementation started November 8, 2026. See docs/progress.md for verified milestones and the required pause before commit 14.
 Prepared November 8, 2026. All scheduling uses Europe/Sofia.
 
 ## Objective and scope
