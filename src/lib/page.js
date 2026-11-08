@@ -7,12 +7,20 @@ export async function page(title, subtitle, render, { publicPage = false, adminO
   if (!configured) throw new Error('Workspace configuration is missing. Add the Supabase settings to .env.local and restart the app.');
   const {data:{session},error} = await supabase.auth.getSession(); if(error) throw error;
   if (!session && !publicPage) { location.replace('/login.html'); return; }
-  let role='member';
+  let role='member', approved=false;
   if(session) {
-   const result=await supabase.from('user_roles').select('role').eq('user_id',session.user.id).single(); if(result.error) throw result.error; role=result.data.role;
+   const result=await supabase.rpc('workspace_status').single(); if(result.error) throw result.error; role=result.data.role; approved=result.data.approved;
    document.querySelector('#admin-link').hidden=role!=='admin';
    document.querySelector('#account').innerHTML=`<span>${escape(session.user.user_metadata.display_name || 'Team member')}</span><button class="btn btn-sm btn-outline-secondary" id="logout">Sign out</button>`;
    document.querySelector('#logout').onclick=async()=>{const {error}=await supabase.auth.signOut(); if(error) notice(error.message); else location.assign('/login.html');};
+  }
+  if (session && !publicPage) {
+   if (!approved) {
+    document.querySelector('.page-heading .btn').hidden = true;
+    document.querySelector('nav').hidden = true;
+    document.querySelector('#page').innerHTML = '<section class="panel"><h2>Workspace approval required</h2><p>Your account is signed in. An administrator must approve workspace access before you can view projects, issues, or files.</p><p class="text-secondary mb-0">If your access was recently changed, sign out and sign in again.</p></section>';
+    return;
+   }
   }
   if(adminOnly && role!=='admin') throw new Error('Administrator access is required to view this page.');
   await render({user:session?.user,role});

@@ -14,7 +14,7 @@ See [deployment and database setup](docs/deployment.md) for migrations, local Su
 
 ## Users and features
 
-All registered users share one team workspace. Members create and manage their reported issues, update issues assigned to them, and manage their own comments/files. Admins manage projects and roles and moderate team content. Database policies enforce the same rules when the UI is bypassed.
+Approved members share one team workspace. New accounts require administrator approval. Members create and manage their reported issues, update issues assigned to them, and manage their own comments/files. Admins manage projects and roles and moderate team content. Database policies enforce the same rules when the UI is bypassed.
 
 Eight separate screens cover the dashboard, login, registration, projects, issue search, issue details, create/edit, and administration. Search supports combined filters and server pagination. Files support explicit upload/download/delete through a private bucket.
 
@@ -24,7 +24,7 @@ Repository: https://github.com/petarbinev/issueflow
 
 Live app: https://issueflow-petarbinev.netlify.app
 
-The public member demo is `member@issueflow.example` / `IssueFlowDemo!2026`. It can manage its own disposable issues, comments and files, but cannot change seeded issues or become an admin. Private evaluator/admin credentials are supplied separately and are never committed. The previously published admin/reviewer accounts are retired and disabled. See the [evaluator guide](docs/demo-guide.md). Use fictional data only.
+Member and administrator credentials are supplied privately to SoftUni evaluators. Registration requests workspace access; an admin must approve it before any projects, issues or files are accessible. See the [evaluator guide](docs/evaluator-guide.md).
 
 Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.noreply.github.com`.
 
@@ -39,11 +39,11 @@ Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.nor
 | `src/lib` | Supabase configuration, sessions and page lifecycle |
 | `src/utils`, `src/styles` | Validation, safe rendering, formatting and responsive styling |
 | `supabase/migrations` | Versioned schema, RLS, functions, private bucket and hardening |
-| `supabase/seed.sql` | Dedicated fictional evaluation accounts and data |
+| `supabase/seed.sql` | Fictional business data; no account provisioning |
 | `tests` | Embedded PostgreSQL and validation tests |
-| `scripts/verify-hosted.mjs` | Live auth/permissions/file lifecycle checks against the dedicated demo project |
+| `scripts/verify-hosted.mjs` | Live auth/permissions/file lifecycle checks against the evaluation backend |
 | `.github` | Required AI instructions and CI workflow |
 
 Read the [architecture and ER diagram](docs/architecture.md), [security model](docs/security.md), [assessment evidence](docs/assessment-evidence.md), and [project plan](PROJECT_PLAN.md).
 
-The user authorized an additional security commit on November 8 after the initial 13 milestones. Two meaningful commits remain reserved for November 9 and 10, 2026; pause again after the November 9 work. This yields at least 16 commits while preserving three actual commit days.
+Development and assessment checkpoints are recorded in [docs/progress.md](docs/progress.md).

@@ -1,11 +1,11 @@
 // Provision one fictional example file in the dedicated demo project.
 import {createClient} from '@supabase/supabase-js';
 import {readFile} from 'node:fs/promises';
-import { settings, publicDemo } from './demo-settings.mjs';
-const { backend: env } = await settings();
+import { settings } from './settings.mjs';
+const { backend: env, member } = await settings({ accountsRequired: true });
 const api=createClient(env.VITE_SUPABASE_URL,env.VITE_SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
 const check=async query=>{const r=await query;if(r.error)throw new Error(r.error.message);return r.data;};
-const {user}=await check(api.auth.signInWithPassword(publicDemo));
+const {user}=await check(api.auth.signInWithPassword(member));
 const issue=await check(api.from('issues').select('id').eq('title','Login button stays disabled after a failed attempt').single());
 const existing=await check(api.from('attachments').select('id').eq('issue_id',issue.id).eq('original_name','sample-evidence.txt'));
 if(!existing.length){

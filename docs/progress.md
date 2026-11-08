@@ -1,11 +1,9 @@
 # Implementation progress
 
-State: `security_fix_authorized_then_paused`. The user explicitly authorized the November 8 security repair after milestone 13. Pause after its push/deployment; the two later-day milestones remain reserved.
+State: `private_workspace_update_then_paused`. The user authorized the November 8 private-access update after the first security repair. Pause after its push/deployment. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 16 and 17.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
-Supabase project: `ynpgrmkpfdlikckuravp` (IssueFlow, Frankfurt).
-Netlify project: `b6d85424-5e59-4a38-bfe5-705c0d3d76bc`, team `pbinev`, Git deployment from `main`.
 
 ## Commit ledger
 
@@ -23,36 +21,27 @@ Netlify project: `b6d85424-5e59-4a38-bfe5-705c0d3d76bc`, team `pbinev`, Git depl
 | 10 | `0598e86` | 2026-11-08T10:07:50+02:00 | feat: add secure attachment upload and download |
 | 11 | `a23f481` | 2026-11-08T10:08:21+02:00 | feat: implement administrator management tools |
 | 12 | `042d711` | 2026-11-08T10:16:28+02:00 | test: verify responsive workflows and authorization |
-| 13 | See the commit containing this checkpoint | November 8, 2026 | Deploy configuration, live app, setup and evaluator documentation |
+| 13 | `e428f4e` | November 8, 2026 | Deployment configuration and evaluator documentation |
+| 14 | `5db9f2e` | November 8, 2026 | Disable exposed privileged accounts and protect private evaluator access |
+| 15 | Current private-workspace checkpoint | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
 
-The milestone 13 SHA and final deployment/CI result are reported in the implementation chat; inspect `git log -1` for the exact checkpoint. No amended commit is needed to record its own SHA.
+## Verified current behavior
 
-## Verified
+- Private member/admin accounts authenticate. The member password was replaced with a random private value; previous login credentials fail and previous sessions are revoked.
+- Workspace RLS requires approval, an unbanned identity and an existing unexpired Auth session. Still-unexpired tokens from removed sessions cannot read workspace data.
+- New accounts start pending. Only admins approve/suspend access or change roles. The final effective administrator cannot be demoted or suspended.
+- Retired accounts stay disabled and do not appear as assignees. Public account credentials are no longer seeded or published in current documentation/scripts.
+- Local lint, four isolated tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
+- Hosted checks passed for private account access, approval/suspension, real role changes, last-admin safeguards, issue/comment ownership and file byte integrity/cleanup. Fixture state was restored.
+- Browser checks verified the pending screen, admin approval, and assignment choices containing only the two approved accounts. Temporary suspension was restored.
+- Migration 20261108095349 records the private-workspace change alongside the six earlier migrations. Local/remote source checksums are verified before completing this checkpoint.
+- Private passwords remain in ignored owner-readable local configuration and are scanned against Git-eligible files/build output without printing values.
 
-- All milestones 1–12 were individually committed and pushed; GitHub Actions passed each code-bearing push.
-- Local ESLint, four tests, and eight-entry Vite production build passed.
-- Embedded PostgreSQL tests rebuild the application schema and check foreign keys, constraints, role escalation, assignee restrictions, immutable reporter identity, forged activity, last-admin protection, and actual API-role function grants. Auth and Storage metadata are simulated locally.
-- Hosted API checks passed for three confirmed demo logins, guest denial, admin permissions, issue/comment ownership, assignee status updates, and private file upload/download byte equality/delete restrictions and cleanup.
-- Browser verified login, dashboard, projects, search, issue create/edit, comment persistence, sign-out/admin login, member admin-page denial and admin panel display. Temporary verification issue was cleaned up.
-- Production member login, direct issue navigation and reload passed. All eight HTML URLs returned HTTP 200 and a missing page returned HTTP 404.
-- Supabase Auth site URL and production/local `/index.html` returns saved and observed. Actual new-user email delivery has not been exercised.
-- Local/remote migrations match versions 20261108075544, 20261108075747, 20261108080623, 20261108081410.
-- Security advisor inherited-function-grant warnings were fixed. Intended authenticated helper/RPC notices and disabled leaked-password protection are explained in docs/security.md.
-- A fictional `sample-evidence.txt` attachment is stored on the demo login issue; a provisioning script is included.
+## Remaining dated milestones
 
-## Remaining work on the two reserved days
+- **November 9 (Europe/Sofia):** regression review, persisted sessions/retry behavior and real phone-width/device QA. Available browser viewport overrides previously clamped to 767px; 375px/1440px verification is not claimed.
+- **November 10 (Europe/Sofia):** fresh-checkout/full Supabase reset and bootstrap, submission/evidence audit, evaluator account review and final live checks.
 
-- **November 9, 2026 (Europe/Sofia), normally actual commit 15:** fresh-day regression review, real phone-width/device QA, persisted sessions/direct navigation/retry cases, and any discovered fixes. Available browser viewport overrides were clamped to an observed 767px, so 375px and 1440px checks are not claimed.
-- **November 10, 2026 (Europe/Sofia), normally actual commit 16:** fresh-checkout setup validation, final screenshots/submission/evidence audit, demo-account review and final live checks. Verify at least 15 public commits on three actual dates.
+New-user email delivery remains unverified and depends on hosted SMTP settings. Private pre-confirmed evaluator accounts remain available for testing.
 
-Resume each only when the user returns on that date or later. Keep actual timestamps, no empty commits, no squashing/backdating. Pause and notify after the November 9 milestone as well.
-
-## Additional security repair authorized November 8
-
-The user requested that public privileged access be removed immediately. An audit found only the three expected demo identities and no unexpected admins. The exposed admin/reviewer accounts were demoted, banned, their refresh tokens revoked and sessions expired. A separately user-created private evaluator is now the sole app administrator.
-
-Migrations `20261108085356_secure_demo_accounts` and `20261108090435_protect_effective_admin_count` protect fixed demo credentials, forbid demo promotion, deny retired identities through restrictive RLS/Storage policies, protect seeded issue ownership and count only effective private administrators in the last-admin safeguard. Both are recorded in the hosted migration history.
-
-Private credentials are read only from ignored local configuration and are not printed. Public seed SQL no longer provisions a known admin password or automatically grants admin. Current docs expose only the limited member login. Historical privileged credentials remain in Git history but their accounts are disabled and denylisted.
-
-Local checks and hosted API tests passed for private admin login, retired-account rejection, public password-change denial, forbidden demo promotion (including by an admin), seeded issue protection, normal member ownership/status and file integrity/cleanup. A private-value scan passed across Git-eligible files. Final push/deployment verification is reported in chat. This additional commit gives 14 today plus two reserved commits, for at least 16 total.
+Keep actual dates and preserve commit/migration history. Historic passwords no longer authenticate; do not restore historical account seeds.

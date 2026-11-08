@@ -1,12 +1,11 @@
 # IssueFlow development rules
 
-Read PROJECT_PLAN.md and docs/progress.md before changing this project.
-Use vanilla JavaScript, HTML, CSS, Bootstrap, Vite, and Supabase only. Keep separate HTML pages and modular services/controllers. No TypeScript or UI framework.
-All schema/policy/storage changes belong in supabase/migrations. Enforce permissions in Supabase, never solely in UI. Never commit credentials or expose privileged keys. Render user content safely.
-Validate each milestone before committing and pushing. Preserve meaningful individual commits and actual timestamps. Record evidence honestly; unrun tests are not passes.
+Read PROJECT_PLAN.md and docs/progress.md before changes. Use vanilla JavaScript, HTML, CSS, Bootstrap, Vite and Supabase. Keep separate HTML pages and modular controllers/services. No TypeScript or UI framework.
 
-## User-required pause
-The initial 13 milestones are complete. The user then authorized one extra security commit on November 8. After that fix, pause until the user returns: the remaining two planned milestones are reserved for November 9 and November 10, 2026 (Europe/Sofia), normally actual commits 15 and 16. Never create empty commits, falsify dates, or squash this history. If the schedule slips, report actual dates.
+All schema, RLS and Storage changes belong in versioned migrations. Enforce login, approval, session and ownership checks server-side. Never commit working credentials or privileged keys. Render user content safely. Keep evaluator settings in ignored local files and do not print them.
 
-## Authorized security exception (November 8, 2026)
-The user explicitly authorized securing the exposed demo accounts after milestone 13. One extra security commit is permitted today. Keep two later-day commits reserved for November 9 and November 10 (now actual commits 15 and 16 if no other fixes are needed). Resume the planned pause after this security fix. Never put working private evaluator credentials in Git or output.
+Validate and push meaningful changes individually. Preserve actual commit timestamps and migration history.
+
+## Current pause schedule
+
+The user authorized the security fix and then the private-workspace update on November 8, 2026. After this update is verified and pushed, pause. Two later-day milestones remain reserved for November 9 and November 10 (Europe/Sofia), normally actual commits 16 and 17. Resume only when the user returns on the relevant day; pause again after November 9 work. Never manufacture commits or dates.
