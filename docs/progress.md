@@ -18,3 +18,5 @@ Milestone 3: seven-table schema applied to the empty hosted project with RLS ena
 Milestone 4: hosted RLS, column grants, assignee restrictions, provisioning, activity triggers and serialized last-admin protection applied. Four local tests pass, including direct SQL authorization attempts under the authenticated/anon roles. These simulate auth/storage schemas; hosted API tests remain required.
 
 Milestone 5: registration/login forms, confirmation guidance, sign-out, session guards, role-aware navigation, safe rendering and error handling implemented. Lint, four local tests and production build pass; hosted auth journey to be checked in milestone 12.
+
+Milestone 6: projects browser and dashboard use Supabase queries for status counts, assigned issues, and recent activity. Empty states implemented; lint and production build pass. Demo data and live journey checks remain pending.
