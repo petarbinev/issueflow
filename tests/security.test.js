@@ -8,11 +8,14 @@ test('RLS and column guards prevent escalation, cross-user edits and last-admin 
  const a='00000000-0000-0000-0000-000000000001', b='00000000-0000-0000-0000-000000000002', admin='00000000-0000-0000-0000-000000000003';
  try {
  await db.exec(`create role anon; create role authenticated; alter default privileges in schema public grant execute on functions to anon,authenticated; create schema auth; create schema storage;
- create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}'::jsonb);
+ create table auth.users(id uuid primary key,email text,email_change text,encrypted_password text,phone text,phone_change text,raw_user_meta_data jsonb default '{}'::jsonb);
  create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
  grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;
  create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text,owner_id text);
- grant usage on schema storage to authenticated; grant select on storage.objects to authenticated;`);
+ grant usage on schema storage to authenticated; grant select,insert on storage.objects to authenticated;
+ alter table storage.objects enable row level security;
+ create policy test_storage_read on storage.objects for select to authenticated using(true);
+ create policy test_storage_insert on storage.objects for insert to authenticated with check(true);`);
  for(const file of (await readdir('supabase/migrations')).sort()) if(!file.includes('storage')) await db.exec(await readFile(`supabase/migrations/${file}`,'utf8'));
  await db.exec(`insert into auth.users(id,raw_user_meta_data) values ('${a}','{"role":"admin"}'),('${b}','{}'),('${admin}','{}'); update public.user_roles set role='admin' where user_id='${admin}';
  insert into public.projects(id,key,name,created_by) values ('10000000-0000-0000-0000-000000000001','APP','Application','${admin}');`);
@@ -30,7 +33,22 @@ test('RLS and column guards prevent escalation, cross-user edits and last-admin 
  await db.exec('reset role;');
  assert.equal((await db.query("select has_function_privilege('anon','public.is_admin()','execute') as allowed")).rows[0].allowed,false);
  assert.equal((await db.query("select has_function_privilege('authenticated','public.record_activity()','execute') as allowed")).rows[0].allowed,false);
- await db.exec('set role anon;');
+ // Public demo credentials and administrative promotion are protected.
+ await db.exec(`insert into auth.users(id,email) values ('00000000-0000-0000-0000-000000000004','member@issueflow.example'),('00000000-0000-0000-0000-000000000005','admin@issueflow.example');`);
+ const demo='00000000-0000-0000-0000-000000000004',retired='00000000-0000-0000-0000-000000000005';
+ await assert.rejects(act(a,`select public.set_user_role('${demo}','admin')`),/cannot become administrators/);
+ await db.exec('reset role;');
+ await assert.rejects(db.exec(`update auth.users set encrypted_password='changed' where id='${demo}'`),/credentials are fixed/);
+ await assert.rejects(db.exec(`update auth.users set email='takeover@example.com' where id='${demo}'`),/credentials are fixed/);
+ await db.exec(`update public.user_roles set role='admin' where user_id='${retired}'`);
+ await act(retired,'select public.is_admin()');
+ assert.equal((await db.query('select public.is_admin() as allowed')).rows[0].allowed,false);
+ assert.equal((await db.query('select count(*)::int as count from public.issues')).rows[0].count,0);
+ assert.equal((await db.query('select count(*)::int as count from storage.objects')).rows[0].count,0);
+ await assert.rejects(db.exec("insert into storage.objects(bucket_id,name) values ('issue-attachments','forbidden')"),/row-level security/);
+ await assert.rejects(db.exec(`insert into public.issues(project_id,title,reporter_id) values ('10000000-0000-0000-0000-000000000001','Blocked write','${retired}')`),/row-level security/);
+ await assert.rejects(act(a,`select public.set_user_role('${a}','member')`),/last administrator/);
+ await db.exec('reset role; set role anon;');
  await assert.rejects(db.query('select * from public.issues'),/permission denied/);
  } finally {await db.close();}
 });

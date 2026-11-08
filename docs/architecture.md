@@ -20,3 +20,7 @@ erDiagram
 ```
 
 Schema SQL lives under `supabase/migrations`; apply in filename order. The frontend must never receive privileged keys. See PROJECT_PLAN.md for field-level design and acceptance criteria.
+
+## Fixed demo identities
+
+`issueflow_private.demo_accounts` is an additional, non-exposed control table keyed to Auth users. API roles have no schema/table access. Narrow helpers apply restrictive policies to the seven application tables and issue-file bucket, reject effective demo admin access, and protect fixed demo credentials in Auth. The local seed creates no administrator with a known password; private evaluator provisioning is separate.

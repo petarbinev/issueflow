@@ -24,7 +24,7 @@ Repository: https://github.com/petarbinev/issueflow
 
 Live app: https://issueflow-petarbinev.netlify.app
 
-Dedicated public demo logins are documented in the [evaluator guide](docs/demo-guide.md). All use `IssueFlowDemo!2026`: `member@issueflow.example`, `reviewer@issueflow.example`, and `admin@issueflow.example`. Use fictional data only.
+The public member demo is `member@issueflow.example` / `IssueFlowDemo!2026`. It can manage its own disposable issues, comments and files, but cannot change seeded issues or become an admin. Private evaluator/admin credentials are supplied separately and are never committed. The previously published admin/reviewer accounts are retired and disabled. See the [evaluator guide](docs/demo-guide.md). Use fictional data only.
 
 Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.noreply.github.com`.
 
@@ -46,4 +46,4 @@ Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.nor
 
 Read the [architecture and ER diagram](docs/architecture.md), [security model](docs/security.md), [assessment evidence](docs/assessment-evidence.md), and [project plan](PROJECT_PLAN.md).
 
-The commit schedule reserves meaningful work for November 9 and 10, 2026. Implementation must pause after milestone 13 and again after milestone 14. The three-day criterion is incomplete until those later commits actually exist.
+The user authorized an additional security commit on November 8 after the initial 13 milestones. Two meaningful commits remain reserved for November 9 and 10, 2026; pause again after the November 9 work. This yields at least 16 commits while preserving three actual commit days.

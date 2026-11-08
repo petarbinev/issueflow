@@ -1,6 +1,6 @@
 # IssueFlow — issue tracking system project plan
 
-Status: implementation started November 8, 2026. See docs/progress.md for verified milestones and the required pause before commit 14.
+Status: implementation started November 8, 2026. The user authorized an additional demo-account security fix after milestone 13; two later-day commits remain reserved (at least 16 total commits). See docs/progress.md for verified milestones and the required pause before the November 9 milestone.
 Prepared November 8, 2026. All scheduling uses Europe/Sofia.
 
 ## Objective and scope
@@ -192,7 +192,7 @@ This gate comes from the user's explicit request, not from a tool or external do
 
 1. After commit 13 is pushed and its deployment is verified, stop implementation and notify the user: “13 of 15 planned commits are pushed. The app is live at [URL]. The remaining commits are scheduled for November 9 and November 10, Europe/Sofia. Work is paused before commit 14.” Include repository URL, latest SHA, checks, and outstanding issues.
 2. Record `paused_before_commit_14` in the progress log as part of milestone 13, with the two remaining scopes and dates. Preserve the gate in AGENTS and Copilot instructions.
-3. Do not create commit 14 before Nov 9 or commit 15 before Nov 10, and resume these milestones only after the user returns to continue. Pause and notify again after commit 14.
+3. The original November 9/10 milestones remain reserved. Following the explicitly authorized November 8 security exception, these are normally actual commits 15/16. Resume only when the user returns on the appropriate date, and pause again after the November 9 milestone.
 4. Prefer daytime commits on Nov 9 and Nov 10 so the dates are distinct in both Sofia time and UTC. Inspect both author and committer timestamps and the public GitHub history.
 5. Never backdate/forward-date commits, manufacture empty commits, or rewrite/squash the required history. If extra fixes require extra commits, the minimum is still 15; preserve the two later-day milestones and notify the user of the adjusted count. Do not hold a known critical fix solely to keep exactly 15 commits.
 6. If day-one work crosses midnight or a date is missed, report the actual state and revise the remaining calendar with the user. Do not claim the three-day criterion early.
@@ -230,3 +230,7 @@ The planned `npm run build` / `dist` hosting configuration follows [Netlify's Vi
 Database authorization will follow [Supabase Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security), and private object authorization will follow [Supabase Storage access control](https://supabase.com/docs/guides/storage/security/access-control).
 
 Versioned database changes and local/remote history reconciliation will follow [Supabase migration deployment guidance](https://supabase.com/docs/guides/deployment/database-migrations).
+
+## Authorized security update — November 8
+
+The user requested removal of public privileged access. The extra security commit disables exposed privileged logins, creates private evaluator access, protects fixed demo identities, and removes working administrator credentials from the current repository. The reserved November 9/10 milestones remain separate, becoming actual commits 15/16 if no additional commits intervene.

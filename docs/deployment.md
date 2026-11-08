@@ -8,7 +8,7 @@ The project public settings are available in Supabase Project Settings → API. 
 
 ## Database setup
 
-Install the Supabase CLI and a supported container runtime for a complete local Supabase environment. From the project root, run `supabase start` and `supabase db reset`. The checked-in config, ordered migrations, and demo seed rebuild the backend. The seed uses pgcrypto in the Supabase `extensions` schema and confirmed fictional Auth users; apply only to the dedicated demonstration backend.
+Install the Supabase CLI and a supported container runtime for a complete local Supabase environment. From the project root, run `supabase start` and `supabase db reset`. The checked-in config, ordered migrations, and demo seed rebuild the backend. The seed uses pgcrypto in the Supabase `extensions` schema. It creates a confirmed public member and a banned sample maintainer with a random password. It never creates an admin with a known password. Provision a private evaluator separately as described in the demo guide; apply seed SQL only to the dedicated demonstration backend.
 
 For a new hosted project, log in through `supabase login`, run `supabase link --project-ref YOUR_PROJECT_REF`, then review `supabase db push --dry-run` before `supabase db push`. Apply the demo seed only to the selected capstone project through its SQL editor. Local tests use embedded PostgreSQL and simulated Auth/Storage metadata; they are not a replacement for resetting a full Supabase instance or testing its Storage API.
 

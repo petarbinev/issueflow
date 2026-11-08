@@ -1,23 +1,35 @@
 # Evaluator walkthrough
 
-All demo accounts use `IssueFlowDemo!2026`. These are fictional app-only accounts.
-
-| Role | Email |
-|---|---|
-| Admin | admin@issueflow.example |
-| Member/reporter | member@issueflow.example |
-| Member/assignee | reviewer@issueflow.example |
-
 Live app: https://issueflow-petarbinev.netlify.app
 
-1. Sign in as member. Inspect dashboard counts and projects.
-2. Open Issues, combine status/priority/project filters, search a title, and use pagination.
-3. Create an issue in an active project, select a priority/assignee, and reload its detail URL.
-4. Edit the title/description. Post a comment and edit/delete your own comment.
-5. On the demo login issue, download the existing `sample-evidence.txt`. Upload a small text file or image, reload, download it, and compare the content. Delete the attachment before deleting the issue.
-6. Sign in as reviewer to update the status of an assigned issue. Full edits of another reporter's issue are denied.
-7. Sign in as admin. Create/edit/archive a project, change a member role, and moderate an issue/comment/file.
-8. Attempt to demote the final admin; the database rejects it. Restore any other role changes after testing.
-9. Sign out; direct visits to protected pages return to sign-in.
+## Public member demo
 
-Keep demo content fictional. Seed data lives in `supabase/seed.sql`. Seed provisioning touches Auth internals for this dedicated demonstration; in a production application, use the supported Admin Auth API to provision confirmed accounts from a trusted server.
+Email: `member@issueflow.example`
+Password: `IssueFlowDemo!2026`
+
+This shared account can read the fictional workspace, create its own issues, manage its own comments/files, and update issues assigned to it. It cannot edit/delete seeded issues, change its login credentials, or be promoted to admin. Sample attachments remain disposable.
+
+## Private administrator evaluation
+
+A separate confirmed evaluator account is provisioned privately. Its credentials are given directly to the assessor outside this repository. They are not included in seed SQL, CI, screenshots, or test source. The previously published privileged logins are disabled, and their old access tokens are blocked by database policies.
+
+1. Sign in as the public member. Inspect the dashboard and projects.
+2. Open Issues, combine filters, search a title and use pagination.
+3. Create your own issue in an active project. Edit it and reload its detail URL.
+4. Post a comment, then edit/delete your own comment.
+5. On the seeded login issue, download `sample-evidence.txt`. On your own issue, upload a small text file or image, reload and download it. Remove your attachments before deleting your issue.
+6. Confirm the public login cannot edit/delete seeded issues or open Administration.
+7. Sign in with the privately supplied evaluator login to manage projects, moderate content and inspect roles. Attempts to promote the shared demo account are rejected.
+8. Test role management with a separate private member account. Restore any changes afterward. The final administrator cannot be demoted.
+9. Sign out; direct protected-page visits return to login.
+
+## Private local verification
+
+Create the confirmed evaluator through Supabase Authentication with a unique password. A trusted project owner grants its application admin role. Keep the credentials in the ignored `.env.evaluator.local` file:
+
+```dotenv
+EVALUATOR_EMAIL=your-private-evaluator-email
+EVALUATOR_PASSWORD="your-unique-private-password"
+```
+
+Use quotes when a password contains `#` or spaces. Do not reuse the public demo password. Run `npm run test:hosted`; credentials and tokens are never printed. The public seed creates no working admin account. Never run old seed revisions against the hosted project.

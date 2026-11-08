@@ -1,10 +1,11 @@
 // Provision one fictional example file in the dedicated demo project.
 import {createClient} from '@supabase/supabase-js';
 import {readFile} from 'node:fs/promises';
-const env=Object.fromEntries((await readFile('.env.local','utf8')).trim().split('\n').map(line=>line.split('=')));
+import { settings, publicDemo } from './demo-settings.mjs';
+const { backend: env } = await settings();
 const api=createClient(env.VITE_SUPABASE_URL,env.VITE_SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
 const check=async query=>{const r=await query;if(r.error)throw new Error(r.error.message);return r.data;};
-const {user}=await check(api.auth.signInWithPassword({email:'member@issueflow.example',password:'IssueFlowDemo!2026'}));
+const {user}=await check(api.auth.signInWithPassword(publicDemo));
 const issue=await check(api.from('issues').select('id').eq('title','Login button stays disabled after a failed attempt').single());
 const existing=await check(api.from('attachments').select('id').eq('issue_id',issue.id).eq('original_name','sample-evidence.txt'));
 if(!existing.length){

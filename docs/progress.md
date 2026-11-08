@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `paused_before_commit_14` once this thirteenth milestone is pushed and its production rollout is verified in chat. Do not create another implementation commit on November 8.
+State: `security_fix_authorized_then_paused`. The user explicitly authorized the November 8 security repair after milestone 13. Pause after its push/deployment; the two later-day milestones remain reserved.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -42,7 +42,17 @@ The milestone 13 SHA and final deployment/CI result are reported in the implemen
 
 ## Remaining work on the two reserved days
 
-- **November 9, 2026 (Europe/Sofia), commit 14:** fresh-day regression review, real phone-width/device QA, persisted sessions/direct navigation/retry cases, and any discovered fixes. Available browser viewport overrides were clamped to an observed 767px, so 375px and 1440px checks are not claimed.
-- **November 10, 2026 (Europe/Sofia), commit 15:** fresh-checkout setup validation, final screenshots/submission/evidence audit, demo-account review and final live checks. Verify at least 15 public commits on three actual dates.
+- **November 9, 2026 (Europe/Sofia), normally actual commit 15:** fresh-day regression review, real phone-width/device QA, persisted sessions/direct navigation/retry cases, and any discovered fixes. Available browser viewport overrides were clamped to an observed 767px, so 375px and 1440px checks are not claimed.
+- **November 10, 2026 (Europe/Sofia), normally actual commit 16:** fresh-checkout setup validation, final screenshots/submission/evidence audit, demo-account review and final live checks. Verify at least 15 public commits on three actual dates.
 
-Resume each only when the user returns on that date or later. Keep actual timestamps, no empty commits, no squashing/backdating. Pause and notify after commit 14 as well.
+Resume each only when the user returns on that date or later. Keep actual timestamps, no empty commits, no squashing/backdating. Pause and notify after the November 9 milestone as well.
+
+## Additional security repair authorized November 8
+
+The user requested that public privileged access be removed immediately. An audit found only the three expected demo identities and no unexpected admins. The exposed admin/reviewer accounts were demoted, banned, their refresh tokens revoked and sessions expired. A separately user-created private evaluator is now the sole app administrator.
+
+Migrations `20261108085356_secure_demo_accounts` and `20261108090435_protect_effective_admin_count` protect fixed demo credentials, forbid demo promotion, deny retired identities through restrictive RLS/Storage policies, protect seeded issue ownership and count only effective private administrators in the last-admin safeguard. Both are recorded in the hosted migration history.
+
+Private credentials are read only from ignored local configuration and are not printed. Public seed SQL no longer provisions a known admin password or automatically grants admin. Current docs expose only the limited member login. Historical privileged credentials remain in Git history but their accounts are disabled and denylisted.
+
+Local checks and hosted API tests passed for private admin login, retired-account rejection, public password-change denial, forbidden demo promotion (including by an admin), seeded issue protection, normal member ownership/status and file integrity/cleanup. A private-value scan passed across Git-eligible files. Final push/deployment verification is reported in chat. This additional commit gives 14 today plus two reserved commits, for at least 16 total.
