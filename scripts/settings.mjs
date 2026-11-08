@@ -13,13 +13,13 @@ export async function settings({ accountsRequired = false } = {}) {
     email: process.env[`${prefix}_EMAIL`] || local[`${prefix}_EMAIL`],
     password: process.env[`${prefix}_PASSWORD`] || local[`${prefix}_PASSWORD`],
   });
-  const evaluator = account('EVALUATOR');
+  const admin = account('ADMIN');
   const member = account('MEMBER');
-  if (accountsRequired && [evaluator, member].some(item => !item.email || !item.password)) {
+  if (accountsRequired && [admin, member].some(item => !item.email || !item.password)) {
     throw new Error('Set private administrator and member credentials in .env.evaluator.local.');
   }
-  if (accountsRequired && (member.email === evaluator.email || member.password === evaluator.password)) {
+  if (accountsRequired && (member.email === admin.email || member.password === admin.password)) {
     throw new Error('The evaluator accounts must have separate identities and passwords.');
   }
-  return { backend, evaluator, member };
+  return { backend, admin, member };
 }

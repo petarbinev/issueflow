@@ -23,4 +23,4 @@ Schema SQL lives under `supabase/migrations`; apply in filename order. The front
 
 ## Approval and retired identities
 
-`user_roles.approved` is server-controlled and defaults to false. Restrictive policies require an approved account and a valid Auth session. The private retired-identity registry remains denylisted for historical accounts. Safe RPCs expose caller status, active assignees, and an admin-only approval queue. Credentials are provisioned separately and never seeded.
+`user_roles.approved` is server-controlled and defaults to false. Restrictive policies require an approved account and a valid Auth session. The historical identity registry remains private; the two retired Auth accounts were deleted after their sample records moved to the approved member. Safe RPCs expose caller status, active assignees, and an admin-only approval queue. Credentials are provisioned separately and never seeded.

@@ -46,12 +46,12 @@ Old published passwords were invalidated. Applied migrations and commit history 
 
 The initial thirteen milestones implemented scope/instructions, Vite scaffolding, schema, authorization, authentication, dashboard/projects, issue CRUD, search, discussion/activity, files, admin tools, validation and deployment.
 
-The user subsequently authorized two November 8 changes: securing exposed privileged accounts, and replacing the remaining shared login with private credentials and approved workspace access.
+November 8 maintenance secured exposed accounts, introduced private credentials and approved workspace access, and then renamed/rotated the private admin and removed retired Auth accounts. Sample records were transferred to the approved member.
 
 After the current update, pause before the two reserved milestones:
 
-1. **November 9, 2026, Europe/Sofia:** regression review, real phone/device checks, persisted sessions/direct navigation/retry cases and observed fixes (normally actual commit 16).
-2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 17).
+1. **November 9, 2026, Europe/Sofia:** regression review, real phone/device checks, persisted sessions/direct navigation/retry cases and observed fixes (normally actual commit 17).
+2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 18).
 
 Keep actual timestamps, preserve meaningful history, and resume only when the user returns on the appropriate date. Additional necessary fixes may raise the total above the minimum. Never use empty commits, backdating or squashing to manufacture assessment evidence.
 

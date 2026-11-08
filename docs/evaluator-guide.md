@@ -24,6 +24,6 @@ Registration creates an unapproved member. Confirm the email if required by host
 
 ## Private local verification
 
-Place the separately supplied account details in the ignored `.env.evaluator.local` file. Use `EVALUATOR_EMAIL`, `EVALUATOR_PASSWORD`, `MEMBER_EMAIL` and `MEMBER_PASSWORD`; quote values containing spaces or `#`. Never commit this file or include it in screenshots.
+Place the separately supplied account details in the ignored `.env.evaluator.local` file. Use `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `MEMBER_EMAIL` and `MEMBER_PASSWORD`; quote values containing spaces or `#`. Never commit this file or include it in screenshots.
 
 Run `npm run test:hosted` only against the designated evaluation backend. It temporarily suspends/restores the private member and creates/removes its own issue/file fixtures. It never prints credentials or tokens.

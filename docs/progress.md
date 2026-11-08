@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `private_workspace_update_then_paused`. The user authorized the November 8 private-access update after the first security repair. Pause after its push/deployment. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 16 and 17.
+State: `account_cleanup_then_paused`. November 8 maintenance includes the private-admin rename/password rotation and retired-account removal. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 17 and 18.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -23,14 +23,17 @@ Repository: https://github.com/petarbinev/issueflow
 | 12 | `042d711` | 2026-11-08T10:16:28+02:00 | test: verify responsive workflows and authorization |
 | 13 | `e428f4e` | November 8, 2026 | Deployment configuration and evaluator documentation |
 | 14 | `5db9f2e` | November 8, 2026 | Disable exposed privileged accounts and protect private evaluator access |
-| 15 | Current private-workspace checkpoint | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
+| 15 | `ca939fb` | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
+
+| 16 | Current account-maintenance checkpoint | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
 
 ## Verified current behavior
 
 - Private member/admin accounts authenticate. The member password was replaced with a random private value; previous login credentials fail and previous sessions are revoked.
 - Workspace RLS requires approval, an unbanned identity and an existing unexpired Auth session. Still-unexpired tokens from removed sessions cannot read workspace data.
 - New accounts start pending. Only admins approve/suspend access or change roles. The final effective administrator cannot be demoted or suspended.
-- Retired accounts stay disabled and do not appear as assignees. Public account credentials are no longer seeded or published in current documentation/scripts.
+- The two retired Auth accounts were deleted after their sample project/issue/comment ownership moved to the approved member. All app records were preserved; exactly two Auth users remain. Public account credentials are no longer seeded or published in current documentation/scripts.
+- The private admin login and display name were renamed. Its password is a distinct random value, old sessions were globally revoked, and local settings now use ADMIN_EMAIL/ADMIN_PASSWORD.
 - Local lint, four isolated tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
 - Hosted checks passed for private account access, approval/suspension, real role changes, last-admin safeguards, issue/comment ownership and file byte integrity/cleanup. Fixture state was restored.
 - Browser checks verified the pending screen, admin approval, and assignment choices containing only the two approved accounts. Temporary suspension was restored.

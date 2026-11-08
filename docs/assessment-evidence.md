@@ -4,7 +4,7 @@ Status on November 8, 2026: implementation through the approved private-workspac
 
 | Criterion | Evidence | Status |
 |---|---|---|
-| 15 commits | Public Git history and docs/progress.md | 15 commits after the authorized private-access update; two later-day commits pending |
+| 15 commits | Public Git history and docs/progress.md | 16 commits after the authorized account-maintenance update; two later-day commits pending |
 | 3 commit days | Actual Git timestamps | Day 1 only; Nov 9 and 10 reserved |
 | Architecture | Eight HTML files, vite.config.js, src/services and components | Build passed |
 | Five responsive screens | Eight page controllers, shared responsive CSS | Desktop and 767px browser reviewed; narrow phone widths need further review |
@@ -19,7 +19,7 @@ Browser checks performed through the real UI: member login, dashboard, search, i
 
 ![Dashboard](screenshots/dashboard.png)
 
-Security update: retired accounts are disabled, all evaluator credentials are private, and workspace access requires approval and a valid session. The three-day requirement remains pending until the November 9/10 commits.
+Security update: retired Auth accounts were deleted after preserving their sample records, all evaluator credentials are private, and workspace access requires approval and a valid session. The three-day requirement remains pending until the November 9/10 commits.
 
 Access update: accounts and passwords are no longer published. The former shared member password was rotated privately and old sessions revoked. Pending-account and retired-assignee checks are included in local/hosted validation.
 

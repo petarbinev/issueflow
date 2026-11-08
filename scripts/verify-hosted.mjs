@@ -2,7 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 import assert from 'node:assert/strict';
 import { settings } from './settings.mjs';
-const { backend, evaluator, member: memberAccount } = await settings({ accountsRequired: true });
+const { backend, admin: adminAccount, member: memberAccount } = await settings({ accountsRequired: true });
 const client = () => createClient(backend.VITE_SUPABASE_URL, backend.VITE_SUPABASE_PUBLISHABLE_KEY, {
   auth: { persistSession: false, autoRefreshToken: false },
 });
@@ -19,7 +19,7 @@ const denied = async query => {
 let fixture, ownIssue, memberId;
 try {
   await checked(member.auth.signInWithPassword(memberAccount));
-  await checked(admin.auth.signInWithPassword(evaluator));
+  await checked(admin.auth.signInWithPassword(adminAccount));
   const uid = (await member.auth.getUser()).data.user.id;
   memberId = uid;
   const aid = (await admin.auth.getUser()).data.user.id;

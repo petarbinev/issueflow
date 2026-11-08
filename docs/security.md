@@ -10,7 +10,7 @@ Restrictive RLS policies protect all seven application tables and issue-file Sto
 
 Only an approved administrator can approve/suspend users or change roles. Role and access changes use the same advisory transaction lock. The last effective administrator cannot be demoted or suspended. Editable signup metadata cannot grant approval or admin privileges.
 
-The member account formerly shared publicly now has a random private password. Its previous sessions were globally revoked. Previously retired privileged identities stay banned and denylisted. Historical Git commits can contain obsolete values; those values no longer authenticate. Do not restore historical account seeds.
+Both remaining accounts have distinct private passwords. The private admin was renamed and rotated, and previous sessions were globally revoked. Retired privileged Auth accounts were deleted after their sample records were transferred to the approved member. Historical Git commits can contain obsolete values; those values no longer authenticate. Do not restore historical account seeds.
 
 ## Membership and data
 
@@ -28,4 +28,4 @@ Private member/admin settings live in ignored owner-readable local files. Tests 
 
 Local PostgreSQL tests verify pending access denial, approval, suspension, revoked-session denial, ownership, active assignees and admin safeguards. Hosted tests exercise the private accounts against the real APIs and restore temporary state.
 
-Applied migration files are retained as an audit trail. Their retired identity references are historical data identifiers, not active login credentials. Internal Auth/Storage operations remain protected even when the UI is bypassed.
+Applied migration files are retained as an audit trail. Historical identity references do not disclose current passwords. Internal Auth/Storage operations remain protected even when the UI is bypassed.
