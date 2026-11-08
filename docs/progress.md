@@ -28,3 +28,5 @@ Milestone 8: title search, combined project/status/priority/assignee filters, st
 Milestone 9: comments create/edit/delete, reporter/assignee status controls and database-written activity history implemented. Lint and build pass. Fictional demo accounts, two projects and twelve sample issues provisioned in the dedicated project for live testing; no real user data used.
 
 Milestone 10: private bucket migration applied, local filename matches remote `20261108080623`; attachment upload/download/delete and partial-failure cleanup implemented. Four local tests and production build pass. Live file round trip is scheduled in milestone 12.
+
+Milestone 11: admin project create/edit/archive/restore, transactional member/admin role management, and moderation navigation implemented. Member access blocked by both page guard and database. Lint/build pass; live verification underway.

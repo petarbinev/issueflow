@@ -1,3 +1,16 @@
-import { shell } from '../components/shell.js';
-shell('Administration', 'Keep your team moving forward.');
-document.querySelector('#page').textContent = 'Workspace setup is in progress.';
+import { page,submit } from '../lib/page.js';
+import { projects,people } from '../services/data.js';
+import { roles,createProject,updateProject,setRole } from '../services/admin.js';
+import { escape,options,badge } from '../utils/dom.js';
+import { notice } from '../components/shell.js';
+page('Administration','Keep your workspace organized and your team supported.',async({user})=>{
+ async function render(){
+ const [allProjects,members,allRoles]=await Promise.all([projects(),people(),roles()]);
+ document.querySelector('#page').innerHTML=`<section class="panel"><h2 class="mb-4">Projects</h2>${allProjects.map(p=>`<div class="issue-row"><span class="issue-key">${escape(p.key)}</span><span class="issue-title">${escape(p.name)}</span>${badge(p.archived?'Archived':'Active')}<button class="btn btn-sm btn-outline-secondary" data-edit="${p.id}">Edit</button><button class="btn btn-sm btn-outline-secondary" data-archive="${p.id}">${p.archived?'Restore':'Archive'}</button></div>`).join('')}<hr><h3>Create a project</h3><form id="project-form" class="row g-3 mt-1"><div class="col-md-3"><label for="key" class="form-label">Project key</label><input id="key" class="form-control" name="key" required pattern="[A-Z][A-Z0-9]{1,9}" placeholder="APP" maxlength="10"></div><div class="col-md-9"><label for="name" class="form-label">Project name</label><input id="name" class="form-control" name="name" required minlength="2" maxlength="100"></div><div class="col-12"><label for="description" class="form-label">Description</label><textarea id="description" class="form-control" name="description" maxlength="2000"></textarea></div><div><button class="btn btn-primary" type="submit">Create project</button></div></form></section><section class="panel"><h2>Team members</h2><p class="text-secondary">Administrators manage projects, permissions and moderation. The last administrator is protected.</p>${members.map(m=>`<form class="issue-row role-form" data-user="${m.id}"><span class="issue-title">${escape(m.display_name)}${m.id===user.id?' (you)':''}</span><label class="visually-hidden" for="role-${m.id}">Role for ${escape(m.display_name)}</label><select id="role-${m.id}" class="form-select" style="width:140px" name="role" required>${options(['member','admin'],allRoles.find(r=>r.user_id===m.id)?.role,'Choose role')}</select><button class="btn btn-outline-primary" type="submit">Save role</button></form>`).join('')}</section><section class="panel"><h2>Moderation</h2><p class="text-secondary">Open an issue to edit or delete it, moderate comments, or remove attachments.</p><a class="btn btn-outline-primary" href="/issues.html">Browse issues</a></section>`;
+ submit(document.querySelector('#project-form'),async fields=>{await createProject({...Object.fromEntries(fields),created_by:user.id});await render();notice('Project created.','success');});
+ document.querySelectorAll('.role-form').forEach(form=>submit(form,async fields=>{await setRole(form.dataset.user,fields.get('role'));location.reload();}));
+ document.querySelectorAll('[data-archive]').forEach(button=>button.onclick=async()=>{const project=allProjects.find(p=>p.id===button.dataset.archive);try{await updateProject(project.id,{archived:!project.archived});await render();}catch(error){notice(error.message);}});
+ document.querySelectorAll('[data-edit]').forEach(button=>button.onclick=async()=>{const project=allProjects.find(p=>p.id===button.dataset.edit),name=prompt('Project name',project.name);if(name===null)return;const description=prompt('Project description',project.description);if(description===null)return;try{await updateProject(project.id,{name,description});await render();}catch(error){notice(error.message);}});
+ }
+ await render();
+},{adminOnly:true});
