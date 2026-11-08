@@ -30,3 +30,7 @@ Milestone 9: comments create/edit/delete, reporter/assignee status controls and 
 Milestone 10: private bucket migration applied, local filename matches remote `20261108080623`; attachment upload/download/delete and partial-failure cleanup implemented. Four local tests and production build pass. Live file round trip is scheduled in milestone 12.
 
 Milestone 11: admin project create/edit/archive/restore, transactional member/admin role management, and moderation navigation implemented. Member access blocked by both page guard and database. Lint/build pass; live verification underway.
+
+Milestone 12: live API tests passed for three demo logins, guest denial, role/project restrictions, reporter/assignee column permissions, comment ownership and private file byte integrity/cleanup. Browser verified member login, dashboard, projects/search, issue create/edit, comment persistence, sign-out, admin access and member denial. Saved dashboard screenshot. Browser viewport override was clamped to 767px; phone-size QA remains pending and is explicitly recorded in the evidence file.
+
+Security-advisor findings about inherited function grants were fixed in migration `20261108081410`; tests now simulate Supabase default grants and assert internal trigger functions are not client-executable. Hosted API tests passed again after hardening. Remaining advisor notices are documented in docs/security.md.

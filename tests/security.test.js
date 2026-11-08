@@ -7,7 +7,7 @@ test('RLS and column guards prevent escalation, cross-user edits and last-admin 
  const db = new PGlite();
  const a='00000000-0000-0000-0000-000000000001', b='00000000-0000-0000-0000-000000000002', admin='00000000-0000-0000-0000-000000000003';
  try {
- await db.exec(`create role anon; create role authenticated; create schema auth; create schema storage;
+ await db.exec(`create role anon; create role authenticated; alter default privileges in schema public grant execute on functions to anon,authenticated; create schema auth; create schema storage;
  create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}'::jsonb);
  create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
  grant usage on schema auth to authenticated; grant execute on function auth.uid() to authenticated;
@@ -27,7 +27,10 @@ test('RLS and column guards prevent escalation, cross-user edits and last-admin 
  await assert.rejects(act(admin,`select public.set_user_role('${admin}','member')`),/last administrator/);
  await act(admin,`select public.set_user_role('${a}','admin')`);
  await act(admin,`select public.set_user_role('${admin}','member')`);
- await db.exec('reset role; set role anon;');
+ await db.exec('reset role;');
+ assert.equal((await db.query("select has_function_privilege('anon','public.is_admin()','execute') as allowed")).rows[0].allowed,false);
+ assert.equal((await db.query("select has_function_privilege('authenticated','public.record_activity()','execute') as allowed")).rows[0].allowed,false);
+ await db.exec('set role anon;');
  await assert.rejects(db.query('select * from public.issues'),/permission denied/);
  } finally {await db.close();}
 });
