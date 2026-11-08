@@ -14,7 +14,7 @@ Registration creates an unapproved member. Confirm the email if required by host
 ## Walkthrough
 
 1. Sign in as the member and inspect the dashboard, projects, filters and pagination.
-2. Create an issue, assign it, edit its description and reload its detail URL.
+2. Create an issue, assign it, edit its description and reload its detail URL. Reporters/admins can change or clear the assignee directly on the detail page using Save assignee, or through Edit issue. An assigned member who is not the reporter can update status but cannot reassign/edit the issue.
 3. Add/edit/delete a comment. Upload a small permitted file, reload and download it.
 4. Sign in as admin and create/edit/archive a project.
 5. Suspend member workspace access. Confirm the member sees the approval screen and cannot load workspace data; restore access afterward.
@@ -27,3 +27,5 @@ Registration creates an unapproved member. Confirm the email if required by host
 Place the separately supplied account details in the ignored `.env.evaluator.local` file. Use `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `MEMBER_EMAIL` and `MEMBER_PASSWORD`; quote values containing spaces or `#`. Never commit this file or include it in screenshots.
 
 Run `npm run test:hosted` only against the designated evaluation backend. It temporarily suspends/restores the private member and creates/removes its own issue/file fixtures. It never prints credentials or tokens.
+
+The sample workspace has twelve fictional scenarios: six assigned to the member, five to the admin and one awaiting triage. Both accounts report issues and reply to each other. Scenario descriptions refer to fictional products, not promises that those product features exist in IssueFlow.

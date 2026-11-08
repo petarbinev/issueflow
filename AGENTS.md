@@ -8,4 +8,4 @@ Validate and push meaningful changes individually. Preserve actual commit timest
 
 ## Current pause schedule
 
-The user authorized the security/private-workspace changes and subsequent private-admin rename/account cleanup on November 8, 2026. After this maintenance is verified and pushed, pause. Two later-day milestones remain reserved for November 9 and November 10 (Europe/Sofia), normally actual commits 17 and 18. Resume only when the user returns on the relevant day; pause again after November 9 work. Never manufacture commits or dates.
+The user authorized the security/private-workspace changes, private-admin rename/account cleanup and assignment/navigation/sample-workflow fixes on November 8, 2026. After this maintenance is verified and pushed, pause. Two later-day milestones remain reserved for November 9 and November 10 (Europe/Sofia), normally actual commits 18 and 19. Resume only when the user returns on the relevant day; pause again after November 9 work. Never manufacture commits or dates.

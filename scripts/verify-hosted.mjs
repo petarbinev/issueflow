@@ -53,6 +53,7 @@ try {
     project_id: project, title: `Verification ${Date.now()}`, reporter_id: aid, assignee_id: uid,
   }).select().single());
   await denied(member.from('issues').update({ title: 'Tampered' }).eq('id', fixture.id).select());
+  await denied(member.from('issues').update({ assignee_id: aid }).eq('id', fixture.id).select());
   await checked(member.from('issues').update({ status: 'Resolved' }).eq('id', fixture.id).select().single());
   await denied(member.from('issues').update({ reporter_id: uid }).eq('id', fixture.id).select());
   const comment = await checked(admin.from('comments').insert({
@@ -62,7 +63,10 @@ try {
   ownIssue = await checked(member.from('issues').insert({
     project_id: project, title: `Ownership ${Date.now()}`, reporter_id: uid,
   }).select().single());
-  await checked(member.from('issues').update({ title: 'Member can edit own issue' }).eq('id', ownIssue.id).select().single());
+  await checked(member.from('issues').update({ title: 'Member can edit own issue', assignee_id: aid }).eq('id', ownIssue.id).select().single());
+  assert.equal((await checked(member.from('issues').select('assignee_id').eq('id', ownIssue.id).single())).assignee_id, aid);
+  await checked(member.from('issues').update({ assignee_id: null }).eq('id', ownIssue.id).select().single());
+  assert.equal((await checked(member.from('issues').select('assignee_id').eq('id', ownIssue.id).single())).assignee_id, null);
   const path = `${fixture.id}/${uid}/${crypto.randomUUID()}`, body = 'IssueFlow file integrity check';
   await checked(member.storage.from('issue-attachments').upload(path, new Blob([body], { type: 'text/plain' }), { contentType: 'text/plain' }));
   try {
@@ -86,6 +90,6 @@ try {
   }
   if (ownIssue) await checked(admin.from('issues').delete().eq('id', ownIssue.id));
   if (fixture) await checked(admin.from('issues').delete().eq('id', fixture.id));
-  await Promise.all([member.auth.signOut(), admin.auth.signOut()]);
+  await Promise.all([member.auth.signOut({ scope: 'local' }), admin.auth.signOut({ scope: 'local' })]);
 }
 console.log('PASS: hosted verification complete; private fixture state restored');

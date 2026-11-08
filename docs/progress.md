@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `account_cleanup_then_paused`. November 8 maintenance includes the private-admin rename/password rotation and retired-account removal. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 17 and 18.
+State: `workflow_review_then_paused`. November 8 maintenance includes private accounts, retired-account removal, and assignment/navigation/sample-workflow fixes. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 18 and 19.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -24,21 +24,27 @@ Repository: https://github.com/petarbinev/issueflow
 | 13 | `e428f4e` | November 8, 2026 | Deployment configuration and evaluator documentation |
 | 14 | `5db9f2e` | November 8, 2026 | Disable exposed privileged accounts and protect private evaluator access |
 | 15 | `ca939fb` | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
+| 16 | `8583175` | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
 
-| 16 | Current account-maintenance checkpoint | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
+| 17 | Current workflow-review checkpoint | November 8, 2026 | Direct assignment controls, session-loading header, realistic samples and regression checks |
 
 ## Verified current behavior
 
 - Private member/admin accounts authenticate. The member password was replaced with a random private value; previous login credentials fail and previous sessions are revoked.
 - Workspace RLS requires approval, an unbanned identity and an existing unexpired Auth session. Still-unexpired tokens from removed sessions cannot read workspace data.
 - New accounts start pending. Only admins approve/suspend access or change roles. The final effective administrator cannot be demoted or suspended.
-- The two retired Auth accounts were deleted after their sample project/issue/comment ownership moved to the approved member. All app records were preserved; exactly two Auth users remain. Public account credentials are no longer seeded or published in current documentation/scripts.
+- The two retired Auth accounts were deleted after their sample ownership moved to the approved member. The later workflow review replaced the twelve generic legacy samples and their discussions/files with twelve realistic scenarios. Exactly two Auth users remain. Public account credentials are no longer seeded or published in current documentation/scripts.
 - The private admin login and display name were renamed. Its password is a distinct random value, old sessions were globally revoked, and local settings now use ADMIN_EMAIL/ADMIN_PASSWORD.
 - Local lint, four isolated tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
 - Hosted checks passed for private account access, approval/suspension, real role changes, last-admin safeguards, issue/comment ownership and file byte integrity/cleanup. Fixture state was restored.
 - Browser checks verified the pending screen, admin approval, and assignment choices containing only the two approved accounts. Temporary suspension was restored.
 - Migration 20261108095349 records the private-workspace change alongside the six earlier migrations. Local/remote source checksums are verified before completing this checkpoint.
 - Private passwords remain in ignored owner-readable local configuration and are scanned against Git-eligible files/build output without printing values.
+
+- Reporters/admins can assign, unassign and reassign from the detail page or full editor. Assigned-only users can update status but cannot edit/reassign; browser and API checks verify both sides.
+- The header starts with a neutral session check and shows Sign in only for a confirmed guest. Browser navigation through Overview/Issues/Projects showed no guest link while signed in.
+- Samples include both reporters, six member assignments, five admin assignments, one triage item, cross-user comments and reproduction evidence. Seed reruns preserve existing edits. Temporary browser/API fixtures are removed after review.
+- Test and seed cleanup now closes only the current test session, preserving other signed-in browser sessions.
 
 ## Remaining dated milestones
 

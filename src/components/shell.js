@@ -12,7 +12,7 @@ export function shell(title, subtitle = '') {
     <a href="/projects.html"><i class="bi bi-folder2"></i> Projects</a>
     <a href="/admin.html" id="admin-link" hidden><i class="bi bi-sliders"></i> Administration</a>
     </nav><div class="sidebar-bottom"><span class="team-icon">IF</span><div>IssueFlow team<small>Shared workspace</small></div></div></aside>
-    <div class="main-wrap"><header class="topbar"><span class="text-secondary">Workspace <span class="mx-2">/</span> <strong class="text-dark">${title}</strong></span><div id="account" class="d-flex gap-3 align-items-center"><a href="/login.html">Sign in</a></div></header>
+    <div class="main-wrap"><header class="topbar"><span class="text-secondary">Workspace <span class="mx-2">/</span> <strong class="text-dark">${title}</strong></span><div id="account" class="d-flex gap-3 align-items-center" aria-busy="true"><span class="text-secondary" role="status">Checking session…</span></div></header>
     <main id="content"><div class="page-heading"><div><div class="eyebrow">YOUR TEAM, IN SYNC</div><h1>${title}</h1><p>${subtitle}</p></div><a class="btn btn-primary" href="/issue-form.html"><i class="bi bi-plus-lg me-2"></i>New issue</a></div><div id="notice" role="status" aria-live="polite"></div><div id="page"><div class="empty-state">Loading your workspace…</div></div></main><footer>IssueFlow <span>Built for focused teams.</span></footer></div>`;
   const path = location.pathname === '/' ? '/index.html' : location.pathname;
   document.querySelectorAll('nav a').forEach(a => { if (a.pathname.replace('.html','') === path.replace('.html','')) { a.classList.add('active'); a.setAttribute('aria-current','page'); } });

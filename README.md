@@ -39,7 +39,8 @@ Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.nor
 | `src/lib` | Supabase configuration, sessions and page lifecycle |
 | `src/utils`, `src/styles` | Validation, safe rendering, formatting and responsive styling |
 | `supabase/migrations` | Versioned schema, RLS, functions, private bucket and hardening |
-| `supabase/seed.sql` | Fictional business data; no account provisioning |
+| `supabase/seed.sql` | Optional project fixtures; no account provisioning |
+| `scripts/seed-workspace.mjs` | Realistic sample workflows through private member/admin API sessions |
 | `tests` | Embedded PostgreSQL and validation tests |
 | `scripts/verify-hosted.mjs` | Live auth/permissions/file lifecycle checks against the evaluation backend |
 | `.github` | Required AI instructions and CI workflow |

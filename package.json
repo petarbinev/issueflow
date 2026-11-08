@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "test": "node --test tests/*.test.js",
     "check": "npm run lint && npm test && npm run build",
-    "test:hosted": "node scripts/verify-hosted.mjs"
+    "test:hosted": "node scripts/verify-hosted.mjs",
+    "seed:workspace": "node scripts/seed-workspace.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.119.0",

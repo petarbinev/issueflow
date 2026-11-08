@@ -9,10 +9,14 @@ export async function page(title, subtitle, render, { publicPage = false, adminO
   if (!session && !publicPage) { location.replace('/login.html'); return; }
   let role='member', approved=false;
   if(session) {
-   const result=await supabase.rpc('workspace_status').single(); if(result.error) throw result.error; role=result.data.role; approved=result.data.approved;
-   document.querySelector('#admin-link').hidden=role!=='admin';
    document.querySelector('#account').innerHTML=`<span>${escape(session.user.user_metadata.display_name || 'Team member')}</span><button class="btn btn-sm btn-outline-secondary" id="logout">Sign out</button>`;
+   document.querySelector('#account').setAttribute('aria-busy','false');
    document.querySelector('#logout').onclick=async()=>{const {error}=await supabase.auth.signOut(); if(error) notice(error.message); else location.assign('/login.html');};
+   const result=await supabase.rpc('workspace_status').single(); if(result.error) throw result.error; role=result.data.role; approved=result.data.approved;
+   document.querySelector('#admin-link').hidden=role!=='admin' || !approved;
+  } else {
+   document.querySelector('#account').innerHTML='<a href="/login.html">Sign in</a>';
+   document.querySelector('#account').setAttribute('aria-busy','false');
   }
   if (session && !publicPage) {
    if (!approved) {

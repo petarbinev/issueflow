@@ -59,6 +59,10 @@ test('workspace approval, sessions, roles and ownership are enforced by PostgreS
     await act(owner,`insert into public.issues(project_id,title,reporter_id,assignee_id) values ('${project}','Login failure','${owner}','${member}')`);
     await assert.rejects(act(member,"update public.issues set title='Tampered'"),/status only/);
     await act(member,"update public.issues set status='Resolved'");
+    await assert.rejects(act(member,`update public.issues set assignee_id='${pending}'`),/status only/);
+    await act(owner,'update public.issues set assignee_id=null');
+    assert.equal((await db.query('select assignee_id from public.issues')).rows[0].assignee_id,null);
+    await act(owner,`update public.issues set assignee_id='${member}'`);
     await assert.rejects(act(member,`update public.issues set reporter_id='${member}'`),/permission denied/);
     await assert.rejects(act(member,`update public.user_roles set approved=true`),/permission denied/);
     await assert.rejects(act(member,'select * from public.workspace_users()'),/Administrator/);

@@ -22,7 +22,7 @@ Use a UUID placeholder replacement, not an email/password committed to the repos
 
 Register/create a separate private member and approve it in the admin panel. Store evaluator credentials locally and share them with the assessor outside Git. See [evaluator-guide.md](evaluator-guide.md).
 
-`supabase/seed.sql` contains business fixtures only. It requires an approved admin and creates no accounts. After bootstrap, run it in the selected test project's SQL editor, or rerun it locally. With no approved admin it creates no fixtures. Auth user provisioning is separate from business-data seeding.
+`supabase/seed.sql` optionally creates the two sample projects after an approved admin exists; it creates no accounts. Once both private accounts are provisioned and approved, configure the ignored settings file and run `npm run seed:workspace`. The command creates twelve fictional scenarios through authenticated API calls, with real actor history, assignments to both accounts, cross-user discussion, status transitions and one sample file. It skips existing scenarios and preserves their edits. `-- --replace-legacy` removes only the twelve known generic legacy samples before adding the new scenarios; it is not a general workspace reset.
 
 For a hosted database, log in to the CLI, link the intended project, review `supabase db push --dry-run`, apply migrations, then compare `supabase migration list`. Pull an existing baseline before changing an unrelated project. Keep all applied migrations in history.
 
@@ -34,4 +34,4 @@ The app has separate HTML pages and no SPA catch-all rewrite. `public/404.html` 
 
 The site and source remain publicly reachable, but workspace data is accessible only after login and approval. New-user confirmation emails require a working hosted email configuration; the built-in SMTP service may not deliver to arbitrary assessor addresses. Keep pre-confirmed private evaluation accounts available.
 
-Run `node scripts/verify-deployment.mjs` for route checks and `npm run test:hosted` for the private-account API checks. `scripts/seed-attachment.mjs` adds a fictional sample file using private member configuration.
+Run `node scripts/verify-deployment.mjs` for route checks and `npm run test:hosted` for the private-account API checks. The sample workflow command includes a downloadable reproduction-notes file. Test and seed cleanup signs out only its own sessions.
