@@ -14,7 +14,7 @@ See [deployment and database setup](docs/deployment.md) for migrations, local Su
 
 ## Users and features
 
-Approved members share one team workspace. New accounts require administrator approval. Members create and manage their reported issues, update issues assigned to them, and manage their own comments/files. Admins manage projects and roles and moderate team content. Database policies enforce the same rules when the UI is bypassed.
+Approved members share one team workspace. New accounts require administrator approval. Every approved member can change or clear the assignee of any issue. Members also manage their reported issues, update the status of issues assigned to them, and manage their own comments/files. Admins manage projects and roles and moderate team content. Database policies enforce the same rules when the UI is bypassed.
 
 Eight separate screens cover the dashboard, login, registration, projects, issue search, issue details, create/edit, and administration. Search supports combined filters and server pagination. Files support explicit upload/download/delete through a private bucket.
 

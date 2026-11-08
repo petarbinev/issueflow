@@ -32,7 +32,7 @@ Application tables: profiles, user_roles, projects, issues, comments, attachment
 
 All workspace table/file access requires an approved, unbanned identity with a valid Auth session. Pending users can retrieve only their own approval status. Admin RPCs approve/suspend members and manage roles, protect the last effective admin and serialize access changes. Safe assignment lists include only active approved members.
 
-Members manage their reported issues, update assigned issue status and manage their own comments/files. Admins manage all app content. Column grants protect immutable identities; triggers write activity. All user content is safely escaped.
+Every approved member can assign, unassign or reassign any issue to an active approved teammate. Members manage their reported issues, update assigned issue status and manage their own comments/files. Admins manage all app content. Column grants protect immutable identities; triggers write activity. All user content is safely escaped.
 
 The file bucket is private, limits individual files to 5 MB and permits PNG/JPEG/PDF/plain text. Storage and metadata failures require compensation/retry. There are no promised comprehensive per-user quotas or malware scanning.
 
@@ -50,8 +50,8 @@ November 8 maintenance secured exposed accounts, introduced private credentials 
 
 After the current update, pause before the two reserved milestones:
 
-1. **November 9, 2026, Europe/Sofia:** regression review, real phone/device checks, persisted sessions/direct navigation/retry cases and observed fixes (normally actual commit 18).
-2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 19).
+1. **November 9, 2026, Europe/Sofia:** regression review, real phone/device checks, persisted sessions/direct navigation/retry cases and observed fixes (normally actual commit 19).
+2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 20).
 
 Keep actual timestamps, preserve meaningful history, and resume only when the user returns on the appropriate date. Additional necessary fixes may raise the total above the minimum. Never use empty commits, backdating or squashing to manufacture assessment evidence.
 

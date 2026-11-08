@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `workflow_review_then_paused`. November 8 maintenance includes private accounts, retired-account removal, and assignment/navigation/sample-workflow fixes. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 18 and 19.
+State: `shared_assignment_then_paused`. November 8 maintenance includes private accounts, retired-account removal, and assignment/navigation/sample-workflow fixes. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 19 and 20.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -25,8 +25,9 @@ Repository: https://github.com/petarbinev/issueflow
 | 14 | `5db9f2e` | November 8, 2026 | Disable exposed privileged accounts and protect private evaluator access |
 | 15 | `ca939fb` | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
 | 16 | `8583175` | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
+| 17 | `0b94712` | November 8, 2026 | Direct assignment controls, session-loading header, realistic samples and regression checks |
 
-| 17 | Current workflow-review checkpoint | November 8, 2026 | Direct assignment controls, session-loading header, realistic samples and regression checks |
+| 18 | Current shared-assignment checkpoint | November 8, 2026 | Allow approved members to reassign any issue with server-side field permissions |
 
 ## Verified current behavior
 
@@ -38,10 +39,10 @@ Repository: https://github.com/petarbinev/issueflow
 - Local lint, four isolated tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
 - Hosted checks passed for private account access, approval/suspension, real role changes, last-admin safeguards, issue/comment ownership and file byte integrity/cleanup. Fixture state was restored.
 - Browser checks verified the pending screen, admin approval, and assignment choices containing only the two approved accounts. Temporary suspension was restored.
-- Migration 20261108095349 records the private-workspace change alongside the six earlier migrations. Local/remote source checksums are verified before completing this checkpoint.
+- Eight migrations are tracked locally and in hosted history. Migration 20261108114909 adds shared assignment with guarded issue edits; its local/remote source checksum matches.
 - Private passwords remain in ignored owner-readable local configuration and are scanned against Git-eligible files/build output without printing values.
 
-- Reporters/admins can assign, unassign and reassign from the detail page or full editor. Assigned-only users can update status but cannot edit/reassign; browser and API checks verify both sides.
+- Every approved member can assign, unassign and reassign from the detail page, including when neither reporter nor assignee. Reporter/admin content editing and reporter/assignee/admin status rules remain enforced. Pending and retired accounts cannot be selected as new assignees. Local, hosted and browser checks cover the new rule.
 - The header starts with a neutral session check and shows Sign in only for a confirmed guest. Browser navigation through Overview/Issues/Projects showed no guest link while signed in.
 - Samples include both reporters, six member assignments, five admin assignments, one triage item, cross-user comments and reproduction evidence. Seed reruns preserve existing edits. Temporary browser/API fixtures are removed after review.
 - Test and seed cleanup now closes only the current test session, preserving other signed-in browser sessions.

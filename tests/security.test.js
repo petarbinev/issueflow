@@ -57,9 +57,15 @@ test('workspace approval, sessions, roles and ownership are enforced by PostgreS
     assert.ok(active.includes(owner) && active.includes(member) && active.includes(pending));
     assert.ok(!active.includes(retired));
     await act(owner,`insert into public.issues(project_id,title,reporter_id,assignee_id) values ('${project}','Login failure','${owner}','${member}')`);
-    await assert.rejects(act(member,"update public.issues set title='Tampered'"),/status only/);
+    await assert.rejects(act(member,"update public.issues set title='Tampered'"),/edit issue content/);
     await act(member,"update public.issues set status='Resolved'");
-    await assert.rejects(act(member,`update public.issues set assignee_id='${pending}'`),/status only/);
+    await act(member,`update public.issues set assignee_id='${pending}'`);
+    // The member is now neither reporter nor assignee, but can still reassign/unassign.
+    await act(member,'update public.issues set assignee_id=null');
+    await act(member,`update public.issues set assignee_id='${owner}'`);
+    await assert.rejects(act(member,"update public.issues set status='Closed'"),/update status/);
+    await assert.rejects(act(member,`update public.issues set assignee_id='${retired}'`),/approved workspace member/);
+    await assert.rejects(act(member,`update public.issues set assignee_id=null,title='Tampered'`),/edit issue content/);
     await act(owner,'update public.issues set assignee_id=null');
     assert.equal((await db.query('select assignee_id from public.issues')).rows[0].assignee_id,null);
     await act(owner,`update public.issues set assignee_id='${member}'`);
@@ -72,6 +78,10 @@ test('workspace approval, sessions, roles and ownership are enforced by PostgreS
     await act(owner,`select public.set_user_role('${pending}','admin')`);
     await act(owner,`select public.set_user_role('${pending}','member')`);
     await act(owner,`select public.set_workspace_access('${pending}',false)`);
+    await assert.rejects(act(member,`update public.issues set assignee_id='${pending}'`),/approved workspace member/);
+    await act(pending,`update public.issues set assignee_id='${pending}'`);
+    await act(member,'select assignee_id from public.issues');
+    assert.equal((await db.query('select assignee_id from public.issues')).rows[0].assignee_id,member);
     await act(pending,'select public.has_workspace_access()');
     assert.equal((await db.query('select public.has_workspace_access() as allowed')).rows[0].allowed,false);
     await db.exec(`reset role; delete from auth.sessions where user_id='${member}';`);

@@ -42,6 +42,7 @@ try {
   assert.equal((await checked(member.rpc('workspace_status').single())).approved, false);
   await denied(member.from('projects').select('*'));
   await denied(member.from('comments').select('*'));
+  await denied(admin.from('issues').insert({project_id: (await checked(admin.from('projects').select('id').limit(1).single())).id,title:'Pending assignee must be denied',reporter_id:aid,assignee_id:uid}).select());
   await denied(member.rpc('workspace_users'));
   await checked(admin.rpc('set_workspace_access', { target_user: uid, allow_access: true }));
   await checked(admin.rpc('set_user_role', { target_user: uid, new_role: 'admin' }));
@@ -53,7 +54,12 @@ try {
     project_id: project, title: `Verification ${Date.now()}`, reporter_id: aid, assignee_id: uid,
   }).select().single());
   await denied(member.from('issues').update({ title: 'Tampered' }).eq('id', fixture.id).select());
-  await denied(member.from('issues').update({ assignee_id: aid }).eq('id', fixture.id).select());
+  await checked(member.from('issues').update({ assignee_id: aid }).eq('id', fixture.id).select().single());
+  await checked(member.from('issues').update({ assignee_id: null }).eq('id', fixture.id).select().single());
+  assert.equal((await checked(member.from('issues').select('assignee_id').eq('id', fixture.id).single())).assignee_id, null);
+  await denied(member.from('issues').update({ status: 'Closed' }).eq('id', fixture.id).select());
+  await denied(member.from('issues').update({ assignee_id: uid, title: 'Tampered' }).eq('id', fixture.id).select());
+  await checked(member.from('issues').update({ assignee_id: uid }).eq('id', fixture.id).select().single());
   await checked(member.from('issues').update({ status: 'Resolved' }).eq('id', fixture.id).select().single());
   await denied(member.from('issues').update({ reporter_id: uid }).eq('id', fixture.id).select());
   const comment = await checked(admin.from('comments').insert({

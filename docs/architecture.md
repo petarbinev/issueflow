@@ -2,7 +2,7 @@
 
 Eight HTML entry points are bundled by Vite. Each has a JavaScript controller; shared rendering and Supabase services live in separate modules. Bootstrap provides layout and accessible form primitives. Netlify serves static assets. Supabase provides Auth, Postgres REST access, database-enforced permissions and private Storage.
 
-Approved users belong to one shared team. Guests and pending accounts cannot read workspace data. Members manage their own issues/comments/files; assignees can change issue status. Admins manage projects, roles, and moderation.
+Approved users belong to one shared team. Guests and pending accounts cannot read workspace data. All approved members can change any issue assignee. Members manage their own issues/comments/files; assignees can change issue status. Admins manage projects, roles, and moderation.
 
 ```mermaid
 erDiagram

@@ -10,11 +10,7 @@ export function detail(current,{user,role},members) {
  event.target.disabled=true;
  try{await deleteIssue(current.id);location.assign('/issues.html');}catch(error){notice(error.message);event.target.disabled=false;}
  });
- if(canEdit) {
   const assignee=document.querySelector('#issue-assignee');
   assignee.innerHTML=`<form id="assignee-form"><label class="visually-hidden" for="new-assignee">Assignee</label><select id="new-assignee" class="form-select mb-2" name="assignee_id">${options(members,current.assignee_id,'Unassigned')}</select><button class="btn btn-sm btn-outline-primary" type="submit">Save assignee</button></form>`;
   submit(document.querySelector('#assignee-form'),async fields=>{await updateIssue(current.id,{assignee_id:fields.get('assignee_id') || null});location.reload();});
- } else {
-  document.querySelector('#issue-assignee').insertAdjacentHTML('beforeend','<small class="d-block mt-2">The reporter or an administrator can change this assignment.</small>');
- }
 }

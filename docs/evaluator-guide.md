@@ -14,7 +14,7 @@ Registration creates an unapproved member. Confirm the email if required by host
 ## Walkthrough
 
 1. Sign in as the member and inspect the dashboard, projects, filters and pagination.
-2. Create an issue, assign it, edit its description and reload its detail URL. Reporters/admins can change or clear the assignee directly on the detail page using Save assignee, or through Edit issue. An assigned member who is not the reporter can update status but cannot reassign/edit the issue.
+2. Create an issue, assign it, edit its description and reload its detail URL. Every approved member can change or clear any issue assignee directly on the detail page using Save assignee. Reporters/admins also have the full Edit issue form. The reporter, current assignee or an admin can update status; changing assignment does not grant permission to edit another reporter's issue content.
 3. Add/edit/delete a comment. Upload a small permitted file, reload and download it.
 4. Sign in as admin and create/edit/archive a project.
 5. Suspend member workspace access. Confirm the member sees the approval screen and cannot load workspace data; restore access afterward.

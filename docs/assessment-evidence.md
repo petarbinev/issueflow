@@ -4,7 +4,7 @@ Status on November 8, 2026: implementation through the approved private-workspac
 
 | Criterion | Evidence | Status |
 |---|---|---|
-| 15 commits | Public Git history and docs/progress.md | 17 commits after the authorized workflow-review update; two later-day commits pending |
+| 15 commits | Public Git history and docs/progress.md | 18 commits after the authorized shared-assignment update; two later-day commits pending |
 | 3 commit days | Actual Git timestamps | Day 1 only; Nov 9 and 10 reserved |
 | Architecture | Eight HTML files, vite.config.js, src/services and components | Build passed |
 | Five responsive screens | Eight page controllers, shared responsive CSS | Desktop and 767px browser reviewed; narrow phone widths need further review |
@@ -25,4 +25,4 @@ Access update: accounts and passwords are no longer published. The former shared
 
 Browser/API verification now includes the pending-access screen, admin approval/suspension, real role changes, revoked-session denial and filtering retired assignees. No working credential values are published.
 
-Workflow review: the detail page exposes assignment controls for reporters/admins; assigned-only members retain status access. A neutral session-loading header replaces the initial guest link. Twelve generic samples were replaced with authenticated cross-user scenarios. Local checks, hosted permission/file tests and browser create/edit/assignment/status/discussion flows were reviewed; test cleanup uses local-session sign-out.
+Workflow review: the detail page exposes assignment controls for every approved workspace member; issue content/status changes retain their own server-side permissions. A neutral session-loading header replaces the initial guest link. Twelve generic samples were replaced with authenticated cross-user scenarios. Local checks, hosted permission/file tests and browser create/edit/assignment/status/discussion flows were reviewed; test cleanup uses local-session sign-out.

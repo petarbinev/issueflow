@@ -16,7 +16,7 @@ Both remaining accounts have distinct private passwords. The private admin was r
 
 `active_members` returns only approved, unbanned members for assignment. The admin-only `workspace_users` RPC provides the approval queue and member inventory; retired users cannot be approved.
 
-Reporters/admins may edit or delete issues. Assignees may change status only. Column grants protect reporter/project IDs and timestamps. Authors/uploaders or admins manage comments/files. Clients cannot write activity history.
+All approved members may change or clear any issue assignee. New assignees must be active approved members. Reporters/admins may edit issue content or delete issues; the reporter, current assignee or an admin may change status. The update RLS policy admits approved workspace members, while the guard trigger enforces these column-specific rules and rejects combined assignment/content or unauthorized status changes. Column grants protect reporter/project IDs and timestamps. Authors/uploaders or admins manage comments/files. Clients cannot write activity history.
 
 All approved members can read shared workspace content. This is not a private tenant-per-user product. Use fictional assessment data. The private bucket enforces supported file types and a 5 MB per-file limit; comprehensive per-user quotas and malware scanning are outside this capstone's scope.
 
