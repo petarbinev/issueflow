@@ -14,3 +14,5 @@ Milestone 2: eight-page Vite scaffold, shared responsive shell, environment hand
 Supabase project: `ynpgrmkpfdlikckuravp` (IssueFlow, Frankfurt), created with the user's organization confirmation.
 
 Milestone 3: seven-table schema applied to the empty hosted project with RLS enabled on all tables. Local embedded PostgreSQL rebuild and constraint checks passed (3 tests total). Local migration filename matches hosted migration version `20261108075544`. ER diagram added.
+
+Milestone 4: hosted RLS, column grants, assignee restrictions, provisioning, activity triggers and serialized last-admin protection applied. Four local tests pass, including direct SQL authorization attempts under the authenticated/anon roles. These simulate auth/storage schemas; hosted API tests remain required.
