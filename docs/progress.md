@@ -12,3 +12,5 @@ GitHub and Supabase connections are not yet confirmed. No cloud acceptance tests
 Milestone 1: pushed `59b3e0d` to https://github.com/petarbinev/issueflow.
 Milestone 2: eight-page Vite scaffold, shared responsive shell, environment handling, CI, and validation checks prepared. Lint, 2 tests, and all eight production HTML outputs passed.
 Supabase project: `ynpgrmkpfdlikckuravp` (IssueFlow, Frankfurt), created with the user's organization confirmation.
+
+Milestone 3: seven-table schema applied to the empty hosted project with RLS enabled on all tables. Local embedded PostgreSQL rebuild and constraint checks passed (3 tests total). Local migration filename matches hosted migration version `20261108075544`. ER diagram added.
