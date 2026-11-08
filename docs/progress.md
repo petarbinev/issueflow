@@ -22,3 +22,5 @@ Milestone 5: registration/login forms, confirmation guidance, sign-out, session 
 Milestone 6: projects browser and dashboard use Supabase queries for status counts, assigned issues, and recent activity. Empty states implemented; lint and production build pass. Demo data and live journey checks remain pending.
 
 Milestone 7: create/edit/detail/delete issue workflow implemented, including permission-aware actions, validated fields, assignment and unsaved-change warning. Lint and production build pass. Storage prevents deleting issues that still contain files.
+
+Milestone 8: title search, combined project/status/priority/assignee filters, stable server pagination, URL persistence and reset controls implemented. Lint and production build pass.
