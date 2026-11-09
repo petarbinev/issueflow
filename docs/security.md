@@ -6,7 +6,7 @@ IssueFlow hosts a shared workspace for approved users. Repository visibility and
 
 Supabase Auth supplies JWT sessions. Registration provisions a member with `approved=false`. A narrow `workspace_status` RPC reports only the caller's status so the UI can display the approval state without exposing workspace data.
 
-Restrictive RLS policies protect all seven application tables and issue-file Storage operations. Access requires approval, an unbanned account, and an existing unexpired session matching the JWT session ID. Removing a session therefore also denies still-unexpired access tokens.
+Restrictive RLS policies protect all seven application tables and issue-file Storage operations. Access requires approval, an unbanned account, and an existing unexpired session matching the JWT session ID. Removing a session therefore also denies still-unexpired access tokens. The app Sign out action ends only the current session, preserving other devices; account suspension still denies every session through RLS.
 
 Only an approved administrator can approve/suspend users or change roles. Role and access changes use the same advisory transaction lock. The last effective administrator cannot be demoted or suspended. Editable signup metadata cannot grant approval or admin privileges.
 
@@ -29,3 +29,5 @@ Private member/admin settings live in ignored owner-readable local files. Tests 
 Local PostgreSQL tests verify pending access denial, approval, suspension, revoked-session denial, ownership, active assignees and admin safeguards. Hosted tests exercise the private accounts against the real APIs and restore temporary state.
 
 Applied migration files are retained as an audit trail. Historical identity references do not disclose current passwords. Internal Auth/Storage operations remain protected even when the UI is bypassed.
+
+File operations check whether metadata committed after a lost response before removing a possibly valid object. Deletion retries accept already-removed records, while visible records that cannot be deleted still report a permission error. When confirmation itself is unavailable, the app asks for a refresh instead of automatically repeating an uncertain write. These network-failure paths are tested with simulated failures; successful transfers are also checked through the live API and browser.

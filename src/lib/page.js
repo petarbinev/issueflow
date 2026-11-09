@@ -11,7 +11,7 @@ export async function page(title, subtitle, render, { publicPage = false, adminO
   if(session) {
    document.querySelector('#account').innerHTML=`<span>${escape(session.user.user_metadata.display_name || 'Team member')}</span><button class="btn btn-sm btn-outline-secondary" id="logout">Sign out</button>`;
    document.querySelector('#account').setAttribute('aria-busy','false');
-   document.querySelector('#logout').onclick=async()=>{const {error}=await supabase.auth.signOut(); if(error) notice(error.message); else location.assign('/login.html');};
+   document.querySelector('#logout').onclick=async()=>{const {error}=await supabase.auth.signOut({scope:'local'}); if(error) notice(error.message); else location.assign('/login.html');};
    const result=await supabase.rpc('workspace_status').single(); if(result.error) throw result.error; role=result.data.role; approved=result.data.approved;
    document.querySelector('#admin-link').hidden=role!=='admin' || !approved;
   } else {
@@ -28,12 +28,17 @@ export async function page(title, subtitle, render, { publicPage = false, adminO
   }
   if(adminOnly && role!=='admin') throw new Error('Administrator access is required to view this page.');
   await render({user:session?.user,role});
- } catch(error) { document.querySelector('#page').innerHTML='<div class="empty-state">This page could not load. Refresh to try again.</div>'; notice(error.message); }
+ } catch(error) {
+  document.querySelector('#page').innerHTML='<div class="empty-state"><p>This page could not load.</p><button class="btn btn-outline-primary" id="retry-page">Try again</button> <a class="btn btn-outline-secondary" href="/index.html">Overview</a></div>';
+  document.querySelector('#retry-page').onclick=()=>location.reload();
+  notice(error.message);
+ }
 }
 export function submit(form, action) {
  form.addEventListener('submit',async event=>{
   event.preventDefault(); if(!form.reportValidity()) return;
   const button=form.querySelector('[type=submit]'); button.disabled=true;
+  notice('');
   try {await action(new FormData(form));} catch(error){notice(error.message);} finally {button.disabled=false;}
  });
 }

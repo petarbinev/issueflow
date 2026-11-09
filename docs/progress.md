@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `shared_assignment_then_paused`. November 8 maintenance includes private accounts, retired-account removal, and assignment/navigation/sample-workflow fixes. Pause after verification and push. The remaining two milestones are reserved for November 9 and November 10, normally actual commits 19 and 20.
+State: `november_9_review_then_paused`. After the November 9 regression update is verified, pushed and deployed, pause. The final planned milestone is November 10 (Europe/Sofia), normally actual commit 20.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -26,8 +26,9 @@ Repository: https://github.com/petarbinev/issueflow
 | 15 | `ca939fb` | November 8, 2026 | Private member rotation, approved membership and credential-free setup |
 | 16 | `8583175` | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
 | 17 | `0b94712` | November 8, 2026 | Direct assignment controls, session-loading header, realistic samples and regression checks |
+| 18 | `00ad6a4` | November 8, 2026 | Allow approved members to reassign any issue with server-side field permissions |
 
-| 18 | Current shared-assignment checkpoint | November 8, 2026 | Allow approved members to reassign any issue with server-side field permissions |
+| 19 | November 9 regression checkpoint | November 9, 2026 | Responsive text/layouts, stale-page recovery, session-scoped sign-out and file retry handling |
 
 ## Verified current behavior
 
@@ -36,7 +37,7 @@ Repository: https://github.com/petarbinev/issueflow
 - New accounts start pending. Only admins approve/suspend access or change roles. The final effective administrator cannot be demoted or suspended.
 - The two retired Auth accounts were deleted after their sample ownership moved to the approved member. The later workflow review replaced the twelve generic legacy samples and their discussions/files with twelve realistic scenarios. Exactly two Auth users remain. Public account credentials are no longer seeded or published in current documentation/scripts.
 - The private admin login and display name were renamed. Its password is a distinct random value, old sessions were globally revoked, and local settings now use ADMIN_EMAIL/ADMIN_PASSWORD.
-- Local lint, four isolated tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
+- Local lint, eleven tests and the Vite production build passed. Tests cover pending access, approval, suspension, revoked sessions, roles, ownership and active members.
 - Hosted checks passed for private account access, approval/suspension, real role changes, last-admin safeguards, issue/comment ownership and file byte integrity/cleanup. Fixture state was restored.
 - Browser checks verified the pending screen, admin approval, and assignment choices containing only the two approved accounts. Temporary suspension was restored.
 - Eight migrations are tracked locally and in hosted history. Migration 20261108114909 adds shared assignment with guarded issue edits; its local/remote source checksum matches.
@@ -47,10 +48,15 @@ Repository: https://github.com/petarbinev/issueflow
 - Samples include both reporters, six member assignments, five admin assignments, one triage item, cross-user comments and reproduction evidence. Seed reruns preserve existing edits. Temporary browser/API fixtures are removed after review.
 - Test and seed cleanup now closes only the current test session, preserving other signed-in browser sessions.
 
-## Remaining dated milestones
+## November 9 regression review
 
-- **November 9 (Europe/Sofia):** regression review, persisted sessions/retry behavior and real phone-width/device QA. Available browser viewport overrides previously clamped to 767px; 375px/1440px verification is not claimed.
-- **November 10 (Europe/Sofia):** fresh-checkout/full Supabase reset and bootstrap, submission/evidence audit, evaluator account review and final live checks.
+See [the detailed review](regression-review-2026-11-09.md). Thirty-six browser layout checks passed at actual widths of 320, 375, 768 and 1440 pixels, covering all eight HTML entry screens plus create/edit variants. Valid long titles/comments no longer cause horizontal overflow. Saved page links beyond the current result set recover to the final available page, including filtered empty results. Error pages offer retry and overview actions.
+
+Browser sign-in retry, direct-link reload, session persistence and sign-out isolation passed. Browser file upload/download bytes matched. Seven simulated file-failure tests cover rollback, ambiguous committed responses and idempotent deletion retries. No physical device testing is claimed. Temporary issue/comment/file fixtures were removed; the twelve original evaluation scenarios remain.
+
+## Final dated milestone
+
+- **November 10 (Europe/Sofia):** fresh-checkout/full Supabase reset and bootstrap, submission/evidence audit, evaluator account review and final live checks. Pause until the user returns for this milestone.
 
 New-user email delivery remains unverified and depends on hosted SMTP settings. Private pre-confirmed evaluator accounts remain available for testing.
 

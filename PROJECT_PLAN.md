@@ -17,7 +17,7 @@ The site is publicly reachable but has no published login credentials. New users
 | GitHub commits | 15 | At least 15 meaningful individually pushed commits |
 | Commit days | 15 | Actual commits on November 8, 9 and 10, 2026 |
 | Architecture | 10 | Vite build with eight HTML entries and modular source |
-| Screens | 10 | Eight responsive screens; phone-size verification remains a scheduled check |
+| Screens | 10 | Eight screens reviewed at 320, 375, 768 and 1440 CSS pixels in the browser |
 | Database | 12 | Seven public application tables with relationships, constraints and indexes |
 | Admin panel | 10 | Project management, workspace approval/suspension, roles and moderation |
 | File storage | 10 | Private issue-file upload, explicit download and delete |
@@ -48,9 +48,9 @@ The initial thirteen milestones implemented scope/instructions, Vite scaffolding
 
 November 8 maintenance secured exposed accounts, introduced private credentials and approved workspace access, and then renamed/rotated the private admin and removed retired Auth accounts. Sample records were initially transferred to the approved member; a subsequent workflow review replaced the generic samples with realistic cross-user scenarios and added direct assignment controls and a neutral session-loading header.
 
-After the current update, pause before the two reserved milestones:
+Delivery checkpoints:
 
-1. **November 9, 2026, Europe/Sofia:** regression review, real phone/device checks, persisted sessions/direct navigation/retry cases and observed fixes (normally actual commit 19).
+1. **November 9, 2026, Europe/Sofia:** browser viewport, session, direct-link and retry review completed with observed fixes (actual commit 19). See docs/regression-review-2026-11-09.md.
 2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 20).
 
 Keep actual timestamps, preserve meaningful history, and resume only when the user returns on the appropriate date. Additional necessary fixes may raise the total above the minimum. Never use empty commits, backdating or squashing to manufacture assessment evidence.
@@ -59,4 +59,4 @@ Keep actual timestamps, preserve meaningful history, and resume only when the us
 
 Run lint, isolated PostgreSQL/validation tests and the eight-page production build. Hosted tests use privately configured member/admin accounts to check approval, role changes, ownership and file integrity, restoring temporary state. Browser checks cover private login, pending access, admin approval and active assignees.
 
-Final outstanding checks are tracked in docs/assessment-evidence.md: full new-user email delivery, full local Supabase reset/fresh bootstrap, and phone-width/device review. Do not label unrun checks as passed.
+Final outstanding checks are tracked in docs/assessment-evidence.md: full new-user email delivery, full local Supabase reset/fresh bootstrap and final submission review. Browser phone widths are verified; physical devices have not been tested. Do not label unrun checks as passed.

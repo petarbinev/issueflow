@@ -19,6 +19,6 @@ export function shell(title, subtitle = '') {
 }
 export function notice(message, type = 'danger') {
   const box = document.querySelector('#notice');
-  box.className = `alert alert-${type}`;
+  box.className = message ? `alert alert-${type}` : '';
   box.textContent = message;
 }

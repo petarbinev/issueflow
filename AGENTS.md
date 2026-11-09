@@ -8,4 +8,4 @@ Validate and push meaningful changes individually. Preserve actual commit timest
 
 ## Current pause schedule
 
-The user authorized the security/private-workspace changes, private-admin rename/account cleanup and assignment/navigation/sample-workflow fixes and shared team assignment on November 8, 2026. After this maintenance is verified and pushed, pause. Two later-day milestones remain reserved for November 9 and November 10 (Europe/Sofia), normally actual commits 19 and 20. Resume only when the user returns on the relevant day; pause again after November 9 work. Never manufacture commits or dates.
+November 9 regression review is authorized and complete after its verification, push and deployment. Pause at that checkpoint. The final planned milestone remains November 10, 2026 (Europe/Sofia), normally actual commit 20: fresh-checkout/bootstrap and submission review. Resume the planned milestone only when the user returns on November 10. Explicit user requests for additional fixes still authorize their stated scope. Preserve actual timestamps; never manufacture commits or dates.

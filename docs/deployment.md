@@ -2,7 +2,7 @@
 
 ## Frontend
 
-Use Node 24. Run `npm ci`, copy `.env.example` to `.env.local`, and enter your Supabase API URL and public publishable key. Run `npm run dev`; `npm run check` runs lint, local tests and a Vite production build.
+Use Node 24. Run `npm ci`, copy `.env.example` to `.env.local`, and enter your Supabase API URL and public publishable key. Run `npm run dev`; `npm run check` runs lint, eleven local tests and a Vite production build.
 
 The frontend receives no secret keys. `.env*` files (except the blank example), `.netlify`, dependencies and build artifacts are ignored by Git.
 
