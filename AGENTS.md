@@ -6,6 +6,6 @@ All schema, RLS and Storage changes belong in versioned migrations. Enforce logi
 
 Validate and push meaningful changes individually. Preserve actual commit timestamps and migration history.
 
-## Current pause schedule
+## Dated delivery checkpoints
 
-November 9 regression review is authorized and complete after its verification, push and deployment. Pause at that checkpoint. The final planned milestone remains November 10, 2026 (Europe/Sofia), normally actual commit 20: fresh-checkout/bootstrap and submission review. Resume the planned milestone only when the user returns on November 10. Explicit user requests for additional fixes still authorize their stated scope. Preserve actual timestamps; never manufacture commits or dates.
+The user returned for the November 9 regression review and November 10 final bootstrap/submission review. Actual commits now span November 8, 9 and 10, 2026 (Europe/Sofia). No scheduled pause remains. Preserve actual timestamps and meaningful history; never manufacture commits or dates. Keep the final verification evidence current when making subsequent changes.

@@ -9,7 +9,7 @@ Account details are supplied privately with the SoftUni submission. This reposit
 
 Use the privately supplied member account to test issue creation/editing, assignment, comments and attachments. Use the separate private admin account to manage projects, approve/suspend workspace access, change roles and moderate content.
 
-Registration creates an unapproved member. Confirm the email if required by hosted Auth settings, then sign in to see the approval screen. The admin approves expected users in Administration → Access requests. An unapproved account cannot read or write workspace data or files through either the UI or API.
+Registration creates a signed-in, unapproved member. Email confirmation is disabled for this capstone; email ownership is not verified. The account sees the approval screen until an admin grants access. The admin approves expected users in Administration → Access requests. An unapproved account cannot read or write workspace data or files through either the UI or API.
 
 ## Walkthrough
 
@@ -19,7 +19,7 @@ Registration creates an unapproved member. Confirm the email if required by host
 4. Sign in as admin and create/edit/archive a project.
 5. Suspend member workspace access. Confirm the member sees the approval screen and cannot load workspace data; restore access afterward.
 6. Promote the private member to admin, verify access, and restore its member role. The final active admin cannot be demoted or suspended.
-7. Register a separate test account to verify pending access and approval. Delivery of confirmation mail depends on hosted email configuration; pre-confirmed evaluation accounts do not depend on mail delivery.
+7. Register a separate test account to verify pending access and approval. No confirmation email is required in this deployment. Approve only the account you intentionally registered, then suspend it again after testing.
 8. Remove temporary files/issues and sign out.
 
 ## Private local verification

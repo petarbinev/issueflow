@@ -1,6 +1,6 @@
 # Implementation progress
 
-State: `november_9_review_then_paused`. After the November 9 regression update is verified, pushed and deployed, pause. The final planned milestone is November 10 (Europe/Sofia), normally actual commit 20.
+State: `complete`. The November 10 (Europe/Sofia) fresh-checkout, full Supabase bootstrap, live registration and submission review passed. Actual commits span November 8, 9 and 10; no scheduled pause remains.
 
 Live app: https://issueflow-petarbinev.netlify.app
 Repository: https://github.com/petarbinev/issueflow
@@ -27,8 +27,10 @@ Repository: https://github.com/petarbinev/issueflow
 | 16 | `8583175` | November 8, 2026 | Rename private admin settings/login, rotate admin password and remove retired accounts |
 | 17 | `0b94712` | November 8, 2026 | Direct assignment controls, session-loading header, realistic samples and regression checks |
 | 18 | `00ad6a4` | November 8, 2026 | Allow approved members to reassign any issue with server-side field permissions |
-
-| 19 | November 9 regression checkpoint | November 9, 2026 | Responsive text/layouts, stale-page recovery, session-scoped sign-out and file retry handling |
+| 19 | `606a916` | November 9, 2026 | Responsive text/layouts, stale-page recovery, session-scoped sign-out and file retry handling |
+| 20 | `4560c06` | November 10, 2026 | Full Supabase reset, first-admin bootstrap and service integration CI |
+| 21 | `58ef9bf` | November 10, 2026 | Allocate available CI ports after the first isolated startup hit a port conflict |
+| 22 | Final review documentation (this revision) | November 10, 2026 | Registration policy, reproducibility evidence, final rubric audit and submission checklist |
 
 ## Verified current behavior
 
@@ -56,8 +58,8 @@ Browser sign-in retry, direct-link reload, session persistence and sign-out isol
 
 ## Final dated milestone
 
-- **November 10 (Europe/Sofia):** fresh-checkout/full Supabase reset and bootstrap, submission/evidence audit, evaluator account review and final live checks. Pause until the user returns for this milestone.
+- **November 10 (Europe/Sofia):** fresh public checkout passed installation, lint, eleven tests and build. The new CI job passed full local Supabase reset/bootstrap on Linux with Docker, including private bucket creation, first admin, pending public registration, sample creation and real Auth/REST/Storage permission checks. See [the final review](final-review-2026-11-10.md) for final results and submission details.
 
-New-user email delivery remains unverified and depends on hosted SMTP settings. Private pre-confirmed evaluator accounts remain available for testing.
+Email confirmation was disabled with the owner's explicit approval because default Supabase SMTP only delivers to project-team addresses. Live public registration, denied pending access, ignored role metadata, admin approval and suspension all passed. The temporary account was deleted; exactly the two private evaluation accounts remain. Email ownership is not verified.
 
 Keep actual dates and preserve commit/migration history. Historic passwords no longer authenticate; do not restore historical account seeds.

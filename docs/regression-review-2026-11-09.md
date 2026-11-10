@@ -27,3 +27,5 @@ All eleven local tests, lint and the production build passed. Temporary issue/co
 ## November 10 scope
 
 Fresh-checkout/full local Supabase reset and bootstrap, final submission evidence and evaluator-account review remain for November 10. New-account confirmation-email delivery remains unverified. No physical device or comprehensive offline-browser test is claimed by this review.
+
+The reserved work was completed on November 10; see [the final review](final-review-2026-11-10.md). Email confirmation was disabled with the owner's approval while mandatory workspace approval was retained.

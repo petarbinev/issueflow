@@ -32,6 +32,23 @@ Netlify builds `main` with `npm run build` and publishes `dist` using Node 24. C
 
 The app has separate HTML pages and no SPA catch-all rewrite. `public/404.html` supplies a real missing-page response. Configure Supabase Auth's production site URL and explicit `/index.html` return URL, plus both localhost and 127.0.0.1 development returns if used.
 
-The site and source remain publicly reachable, but workspace data is accessible only after login and approval. New-user confirmation emails require a working hosted email configuration; the built-in SMTP service may not deliver to arbitrary assessor addresses. Keep pre-confirmed private evaluation accounts available.
+The site and source remain publicly reachable, but workspace data is accessible only after login and approval. For this capstone, Auth → Sign In / Providers → Confirm email is disabled with the owner's approval. Registration gives a session immediately, but a new member remains unapproved and cannot access workspace data. Email ownership is not verified; approve only expected users. Before a production rollout requiring verified email, configure custom SMTP and re-enable confirmation. The [default Supabase mail service](https://supabase.com/docs/guides/auth/auth-smtp) only sends to project-team addresses. Private evaluation accounts remain available independently of registration.
 
 Run `node scripts/verify-deployment.mjs` for route checks and `npm run test:hosted` for the private-account API checks. The sample workflow command includes a downloadable reproduction-notes file. Test and seed cleanup signs out only its own sessions.
+
+## Fresh-backend verification
+
+The GitHub Actions `local-stack` job uses Node 24, Supabase CLI 3.0.0 and the runner's Docker runtime. It allocates available API/database/shadow ports, starts an isolated local stack, resets all eight migrations and the seed, verifies that application tables start empty, bootstraps a first admin, and tests public registration plus approval. It then creates the twelve sample scenarios and runs the real Auth/REST/Storage permission and file checks. This complements the fast embedded PostgreSQL tests with actual Supabase services.
+
+To reproduce on a machine with Docker and the CLI installed:
+
+```sh
+npm ci
+supabase start -x studio,imgproxy,mailpit,realtime,edge-runtime,logflare,vector,supavisor,postgres-meta
+supabase db reset --yes
+supabase status -o json > /tmp/issueflow-local-status.json
+node scripts/verify-local-stack.mjs /tmp/issueflow-local-status.json
+supabase stop --no-backup
+```
+
+Run this against a disposable local stack: reset replaces its local data, and the test leaves sample fixtures until the stack is stopped. The status file contains local-only keys; remove it afterward. The script accepts only a loopback HTTP API on an unprivileged port, generates random short-lived test credentials, and deletes its private settings in `finally`. It does not use hosted secrets or contact the deployed project. CI discards the local volumes even if a check fails. No private evaluator credentials are required in GitHub Actions.

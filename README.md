@@ -24,7 +24,7 @@ Repository: https://github.com/petarbinev/issueflow
 
 Live app: https://issueflow-petarbinev.netlify.app
 
-Member and administrator credentials are supplied privately to SoftUni evaluators. Registration requests workspace access; an admin must approve it before any projects, issues or files are accessible. See the [evaluator guide](docs/evaluator-guide.md).
+Member and administrator credentials are supplied privately to SoftUni evaluators. Registration requests workspace access without an email-confirmation step; an admin must approve it before any projects, issues or files are accessible. See the [evaluator guide](docs/evaluator-guide.md).
 
 Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.noreply.github.com`.
 
@@ -43,8 +43,11 @@ Author: Petar Binev (`petarbinev`); public commit contact: `petarbinev@users.nor
 | `scripts/seed-workspace.mjs` | Realistic sample workflows through private member/admin API sessions |
 | `tests` | Embedded PostgreSQL and validation tests |
 | `scripts/verify-hosted.mjs` | Live auth/permissions/file lifecycle checks against the evaluation backend |
+| `scripts/verify-local-stack.mjs` | Full local reset, first-admin bootstrap and real Supabase service checks in CI |
 | `.github` | Required AI instructions and CI workflow |
 
 Read the [architecture and ER diagram](docs/architecture.md), [security model](docs/security.md), [assessment evidence](docs/assessment-evidence.md), and [project plan](PROJECT_PLAN.md).
 
 Development and assessment checkpoints are recorded in [docs/progress.md](docs/progress.md).
+
+Final verification and private submission steps are in the [November 10 review](docs/final-review-2026-11-10.md).

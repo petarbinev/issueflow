@@ -8,7 +8,7 @@ Use HTML, CSS, vanilla JavaScript, Bootstrap, Node.js, npm and Vite. Keep eight 
 
 Netlify serves the static Vite build from the public GitHub repository. Supabase provides Auth, PostgreSQL/REST and private file Storage. Controllers, services, shared components, utilities and styles live in separate modules.
 
-The site is publicly reachable but has no published login credentials. New users register and confirm email where required, then wait for administrator approval. Approved private member/admin accounts are supplied directly to SoftUni evaluators.
+The site is publicly reachable but has no published login credentials. New users register without email confirmation in this capstone deployment, then wait for administrator approval. Email ownership is not verified. Approved private member/admin accounts are supplied directly to SoftUni evaluators.
 
 ## Assessment coverage
 
@@ -51,7 +51,7 @@ November 8 maintenance secured exposed accounts, introduced private credentials 
 Delivery checkpoints:
 
 1. **November 9, 2026, Europe/Sofia:** browser viewport, session, direct-link and retry review completed with observed fixes (actual commit 19). See docs/regression-review-2026-11-09.md.
-2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, final submission/evidence audit and final live checks (normally actual commit 20).
+2. **November 10, 2026, Europe/Sofia:** fresh-checkout setup, full local-service reset/bootstrap, final submission/evidence audit and final live checks completed in commits 20–22. A CI port conflict required a meaningful fix-forward commit.
 
 Keep actual timestamps, preserve meaningful history, and resume only when the user returns on the appropriate date. Additional necessary fixes may raise the total above the minimum. Never use empty commits, backdating or squashing to manufacture assessment evidence.
 
@@ -59,4 +59,4 @@ Keep actual timestamps, preserve meaningful history, and resume only when the us
 
 Run lint, isolated PostgreSQL/validation tests and the eight-page production build. Hosted tests use privately configured member/admin accounts to check approval, role changes, ownership and file integrity, restoring temporary state. Browser checks cover private login, pending access, admin approval and active assignees.
 
-Final outstanding checks are tracked in docs/assessment-evidence.md: full new-user email delivery, full local Supabase reset/fresh bootstrap and final submission review. Browser phone widths are verified; physical devices have not been tested. Do not label unrun checks as passed.
+Final verification is recorded in docs/assessment-evidence.md and docs/final-review-2026-11-10.md. Public registration uses immediate sessions plus mandatory admin approval; email delivery is not part of this deployment. Browser phone widths are verified; physical devices have not been tested. Do not label unrun checks as passed.

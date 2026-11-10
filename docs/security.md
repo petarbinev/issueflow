@@ -4,7 +4,7 @@ IssueFlow hosts a shared workspace for approved users. Repository visibility and
 
 ## Authentication and approval
 
-Supabase Auth supplies JWT sessions. Registration provisions a member with `approved=false`. A narrow `workspace_status` RPC reports only the caller's status so the UI can display the approval state without exposing workspace data.
+Supabase Auth supplies JWT sessions. Registration provisions a member with `approved=false`. A narrow `workspace_status` RPC reports only the caller's status so the UI can display the approval state without exposing workspace data. Email confirmation is intentionally disabled for this capstone so registration works without custom SMTP. Email ownership is not verified; administrator approval is still mandatory, and admins should approve only expected users. A production rollout requiring verified email must configure SMTP and enable confirmation.
 
 Restrictive RLS policies protect all seven application tables and issue-file Storage operations. Access requires approval, an unbanned account, and an existing unexpired session matching the JWT session ID. Removing a session therefore also denies still-unexpired access tokens. The app Sign out action ends only the current session, preserving other devices; account suspension still denies every session through RLS.
 
