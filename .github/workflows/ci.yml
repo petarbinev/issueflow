@@ -27,6 +27,22 @@ jobs:
       - uses: supabase/setup-cli@v1
         with:
           version: 3.0.0
+      - name: Allocate available ports for this disposable stack
+        run: |
+          node --input-type=module <<'JS'
+          import {createServer} from 'node:net';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const servers=Array.from({length:3},()=>createServer());
+          try {
+            await Promise.all(servers.map(server=>new Promise((resolve,reject)=>server.once('error',reject).listen(0,'127.0.0.1',resolve))));
+            const [api,database,shadow]=servers.map(server=>server.address().port);
+            const file='supabase/config.toml';
+            const config=await readFile(file,'utf8');
+            await writeFile(file,config.replace(/(\[api\][\s\S]*?\nport = )\d+/,`$1${api}`).replace(/(\[db\][\s\S]*?\nport = )\d+/,`$1${database}\nshadow_port = ${shadow}`));
+          } finally {
+            await Promise.all(servers.map(server=>new Promise(resolve=>server.close(resolve))));
+          }
+          JS
       - name: Start isolated local services
         run: |
           mkdir -p test-results

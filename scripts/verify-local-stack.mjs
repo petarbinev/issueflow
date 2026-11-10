@@ -19,8 +19,8 @@ function strings(value) {
   return [];
 }
 const values=strings(status);
-const apiUrl=values.find(value=>{try{const url=new URL(value);return ['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&url.port==='54321'&&['','/'].includes(url.pathname);}catch{return false;}});
-assert.ok(apiUrl,'Only a local loopback Supabase API on port 54321 is accepted.');
+const apiUrl=values.find(value=>{try{const url=new URL(value);return url.protocol==='http:'&&['127.0.0.1','localhost','[::1]'].includes(url.hostname)&&Number(url.port)>=1024&&['','/'].includes(url.pathname);}catch{return false;}});
+assert.ok(apiUrl,'Only a local loopback HTTP Supabase API on an unprivileged port is accepted.');
 const role=token=>{try{return JSON.parse(Buffer.from(token.split('.')[1],'base64url').toString()).role;}catch{return null;}};
 const serviceKey=values.find(value=>role(value)==='service_role') || values.find(value=>value.startsWith('sb_secret_'));
 const publicKey=values.find(value=>role(value)==='anon') || values.find(value=>value.startsWith('sb_publishable_'));
