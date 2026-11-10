@@ -1,5 +1,7 @@
 name: Verify app
 on: [push, pull_request]
+permissions:
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -11,3 +13,40 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+  local-stack:
+    name: Fresh Supabase reset and bootstrap
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - uses: supabase/setup-cli@v1
+        with:
+          version: 3.0.0
+      - name: Start isolated local services
+        run: |
+          mkdir -p test-results
+          supabase start -x studio,imgproxy,mailpit,realtime,edge-runtime,logflare,vector,supavisor,postgres-meta > test-results/local-start.log 2>&1
+      - name: Reset all local migrations and seed
+        run: supabase db reset --yes > test-results/local-reset.log 2>&1
+      - name: Verify first-admin bootstrap and workflows
+        run: |
+          supabase status -o json > test-results/local-status.json
+          node scripts/verify-local-stack.mjs test-results/local-status.json
+      - name: Show redacted local diagnostics on failure
+        if: failure()
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile} from 'node:fs/promises';
+          for(const file of ['test-results/local-start.log','test-results/local-reset.log']) {
+            const text=await readFile(file,'utf8').catch(()=> '');
+            console.log(text.replace(/eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+/g,'[redacted token]').replace(/sb_(?:secret|publishable)_[A-Za-z0-9_-]+/g,'[redacted key]').replace(/postgres(?:ql)?:\/\/[^@\s]+@/g,'postgresql://[redacted]@'));
+          }
+          JS
+      - name: Discard local stack
+        if: always()
+        run: supabase stop --no-backup
